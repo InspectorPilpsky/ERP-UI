@@ -1,0 +1,86 @@
+.cardWrap {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+}
+
+.card {
+    border-radius: 10px;
+    padding: 20px;
+    justify-content: center;
+    width: 280px;
+    height: 160px;
+    background: #FFF;
+    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.front {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 25px;
+    z-index: 1;
+    color: #000;
+    font-family: Inter;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    backface-visibility: hidden;
+    transition: transform .3s cubic-bezier(.2, .85, .4, 1.275);
+}
+
+.back {
+    position: absolute;
+    display: flex;
+    gap: 8px;
+    flex-flow: column;
+    top: 0;
+    z-index: 0;
+    backface-visibility: hidden;
+    transform: rotateY(-180deg);
+    transition: transform .3s cubic-bezier(.2, .85, .4, 1.275);
+}
+
+.input {
+    display: flex;
+    flex-flow: column;
+}
+
+.actions {
+    display: flex;
+    justify-content: end;
+    gap: 8px;
+}
+
+.active .back {
+    transform: rotateY(0deg);
+    z-index: 2;
+}
+
+.active .front {
+    transform: rotateY(180deg);
+    z-index: -1;
+}
+
+.addCategory {
+    display: flex;
+    color: #939393;
+    text-align: center;
+    font-family: Inter;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.addCategory .plus {
+    color: #939393;
+    text-align: center;
+    font-family: Inter;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}

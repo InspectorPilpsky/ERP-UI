@@ -2,12 +2,11 @@ import styles from './styles.module.css'
 import folder_icon from '../../../../../assets/folder.png'
 
 interface Props {
-    children?: React.ReactNode;
+    children: React.ReactNode;
     qty?: number;
-    add?: boolean;
 }
 
-export default function Card({ children, qty, add }: Props) {
+export default function Card({ children, qty }: Props) {
     return (
         <div className={styles.card}>
             <div className={styles.content}>
@@ -15,12 +14,6 @@ export default function Card({ children, qty, add }: Props) {
                     <img src={folder_icon} />
                 </picture>
                 {children}
-                {add &&
-                    <div className={styles.addCategory}>
-                        <div className={styles.plus}>+</div>
-                        <div>Добавить категорию</div>
-                    </div>
-                }
             </div>
             <div className={styles.qty}>{qty}</div>
         </div>

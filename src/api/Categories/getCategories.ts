@@ -1,19 +1,19 @@
 import api from "../api";
-import { Pageable } from "../pageable";
+import { PageableWrapper } from "../pageable";
 import { Category } from "./domain/Category";
 import { CategoryDTO } from "./dto/Category.dto";
 import { categoryDTOToCategory } from "./transformers/fromDto";
 
-type GetCategoriesResponse = Pageable<CategoryDTO[]>;
+type GetCategoriesResponse = PageableWrapper<CategoryDTO[]>;
 
-function transformResponse(res: GetCategoriesResponse): Pageable<Category[]> {
+function transformResponse(res: GetCategoriesResponse): PageableWrapper<Category[]> {
     return {
         ...res,
         content: res.content.map(categoryDTOToCategory)
     }
 }
 
-export async function getCategories(): Promise<Pageable<Category[]>> {
+export async function getCategories(): Promise<PageableWrapper<Category[]>> {
     const res = await api.get<GetCategoriesResponse>("/api/v1/directory/category");
     return transformResponse(res);
 }

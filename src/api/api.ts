@@ -42,11 +42,16 @@ export class Api {
         options: Options & { data: Data | null }
     ): Promise<Response> {
             let params = "";
-            if(options.query) params = "?" + new URLSearchParams(Object.entries(options.query)).toString();
+            if(options.query) {
+                params = "?" + new URLSearchParams(Object.entries(options.query)).toString();
+            };
             const reqURL = (new URL(url, this.baseURL)).href;
             const opts = options.data ?
             {
                 method,
+                headers: {
+                    "Content-Type": "application/json"
+                },
                 body: JSON.stringify(options.data),
                 signal: options.signal
             }
