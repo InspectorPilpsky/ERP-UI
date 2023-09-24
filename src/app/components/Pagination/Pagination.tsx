@@ -2,10 +2,10 @@ import { Pageable } from '../../../api/pageable'
 import styles from './styles.module.css'
 
 interface Props {
-    pageable: Pageable
+    pageable?: Pageable
 }
 
-export default function Pagination({ }: Props) {
+export default function Pagination({}: Props) {
     return (
         <div className={styles.wrap}>
             <div className={styles.arrow}>{"<"}</div>
