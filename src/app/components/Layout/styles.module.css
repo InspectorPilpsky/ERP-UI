@@ -16,7 +16,6 @@
     grid-column: 1/2;
     grid-row: 1/-1;
     min-height: 100vh;
-    z-index: 1000;
 }
 
 .content {

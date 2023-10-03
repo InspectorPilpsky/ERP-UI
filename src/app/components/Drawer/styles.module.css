@@ -1,0 +1,37 @@
+.wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    width: 100%;
+}
+
+.shade {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+
+.drawer {
+    width: 400px;
+    background-color: #FFF;
+    padding: 24px 12px;
+}
+
+.picture {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.picture>img {
+    width: 180px;
+}
+
+.picture>span {
+    font-family: Inter;
+    font-size: 25px;
+}

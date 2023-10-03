@@ -4,6 +4,9 @@ import styles from './styles.module.css'
 import { Component } from '../../../api/Components/domain/Component';
 import { getComponents } from '../../../api/Components/getComponents';
 import { PAGEABLE_DEFAULT, PageableWrapper } from '../../../api/pageable';
+import Drawer from '../../components/Drawer/Drawer';
+import Button from '../../components/Button/Button';
+import Search from '../../components/Search/Search';
 
 export default function Components() {
 
@@ -18,32 +21,42 @@ export default function Components() {
 
     return (
         <div className={styles.pageWrapper}>
+            {/* <Drawer /> */}
             <div className={styles.components}>
                 <div className={styles.header}>
-                </div>
-                <div className={styles.table}>
-                    <div className={styles.tableHeader}>
-                        <div>Наименование</div>
-                        <div>Единицы измерения</div>
-                        <div>Категория</div>
-                        <div>Код</div>
-                        <div>Наличие</div>
+                    <div className={styles.headerTitle}>Компоненты</div>
+                    <div className={styles.headerFilters}>
+                        <Search></Search>
+                        <Button onClick={() => console.log("test")}>Поиск</Button>
                     </div>
-                    {components.content
-                        .map(component => {
-                            const {name, unit, category, code, stock} = component;
-                            const values = Object.values({
-                                name,
-                                unit,
-                                category: category.name,
-                                code,
-                                stock
-                            })
-                            return <TableRow>{values}</TableRow>
-                        }
-                        )
-                    }
                 </div>
+                <table className={styles.componentsTable}>
+                    <thead>
+                        <tr>
+                            <th>Наименование</th>
+                            <th>Единицы измерения</th>
+                            <th>Категория</th>
+                            <th>Код</th>
+                            <th>Наличие</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {components.content
+                            .map(component => {
+                                const { id, name, unit, category, code, stock } = component;
+                                const values = Object.values({
+                                    name,
+                                    unit,
+                                    category: category.name,
+                                    code,
+                                    stock
+                                })
+                                return <tr key={id}>{values.map((v, key) => <td key={key}>{v}</td>)}</tr>
+                            }
+                            )
+                        }
+                    </tbody>
+                </table>
 
             </div>
             <div className={styles.pagination}>

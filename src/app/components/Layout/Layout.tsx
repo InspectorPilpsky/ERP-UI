@@ -7,12 +7,12 @@ export default function Layout() {
             <header className={styles.header}>
                 
             </header>
-            <aside className={styles.menu}>
-                <Menu />
-            </aside>
             <section className={styles.content}>
                 <Outlet />
             </section>
+            <aside className={styles.menu}>
+                <Menu />
+            </aside>
         </div>
     )
 }
