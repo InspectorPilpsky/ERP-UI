@@ -3,6 +3,7 @@ import { Route, createBrowserRouter, createRoutesFromElements } from "react-rout
 import Layout from "./components/Layout/Layout";
 import Categories from "./pages/Categories/Categories";
 import Components from "./pages/Components/Components";
+import TechCards from "./pages/TechCards/TechCards";
 
 export function useRouter() {
     return useMemo(() => {
@@ -11,7 +12,7 @@ export function useRouter() {
                 <Route index element={<div>Main page</div>} />
                 <Route path="orders" element={<div>orders</div>} />
                 <Route path="manufactoring" element={<div>manufactoring</div>} />
-                <Route path="techcards" element={<div>techcards</div>} />
+                <Route path="techcards" element={<TechCards />} />
                 <Route path="components" element={<Components />} />
                 <Route path="categories" element={<Categories />} />
             </Route>
