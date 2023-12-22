@@ -10,12 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@gravity-ui/navigation": "^1.8.0",
+    "@reactuses/core": "^4.0.8",
     "clsx": "^2.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.16.0"
   },
   "devDependencies": {
+    "@gravity-ui/icons": "^2.8.1",
+    "@gravity-ui/uikit": "^5.24.0",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@types/react-router-dom": "^5.3.3",

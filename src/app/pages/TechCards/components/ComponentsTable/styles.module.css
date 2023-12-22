@@ -1,0 +1,36 @@
+.techCardsTable {
+    width: 100%;
+    border-spacing: 0;
+}
+
+.techCardsTable th {
+    padding: 20px 16px;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-self: stretch;
+    color: #7C7C7C;
+    font-family: Inter;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    background: #E2E2E2;
+}
+
+.techCardsTable tbody>tr {
+    padding: 40px 16px;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-self: stretch;
+    color: #000;
+    font-family: Inter;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.techCardsTable td {
+    padding: 20px 16px;
+    background-color: #FFF;
+}

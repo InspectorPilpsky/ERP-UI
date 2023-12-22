@@ -3,3 +3,11 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+.g-root {
+  --gn-aside-header-menu-item-icon-color: #FFF !important;
+}
+
+.gn-composite-bar-item__title-text, .gn-logo__logo {
+  color: #FFF !important;
+}

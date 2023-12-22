@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import styles from './styles.module.css'
 import { useState } from 'react';
 import { Category } from '../../../../../api/Categories/domain/Category';
+import { Button, TextInput } from '@gravity-ui/uikit';
 
 interface Props {
     category?: Category;
@@ -27,20 +28,19 @@ export default function AddCategory({ category, onChange, onAdd }: Props) {
                 className={clsx(styles.card, styles.back)}
             >
                 <div className={styles.input}>
-                    <label htmlFor="categoryName">Наименование</label>
-                    <input id="categoryName"
+                    <TextInput label="Наименование"
+                        placeholder='Введите наименование категории'
                         value={category?.name}
-                        onChange={(e) => onChange && onChange(e.target.value)}
-                    />
+                        onChange={(e) => onChange && onChange(e.target.value)} />
                 </div>
                 <div className={styles.actions}>
-                    <button
-                        onClick={() => {onAdd && onAdd(); setIsActive(false)}}
-                    >Добавить</button>
-                    <button
+                    <Button
+                        onClick={() => { onAdd && onAdd(); setIsActive(false) }}
+                    >Добавить</Button>
+                    <Button
                         onClick={() => setIsActive(false)}>
                         Отмена
-                    </button>
+                    </Button>
                 </div>
             </div>
         </div>

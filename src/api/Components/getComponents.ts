@@ -13,7 +13,7 @@ function transformResponse(res: GetComponentsResponse): PageableWrapper<Componen
     }
 }
 
-export async function getComponents(): Promise<PageableWrapper<Component[]>> {
-    const res = await api.get<GetComponentsResponse>("/api/v1/directory/component");
+export async function getComponents(page: number, size: number): Promise<PageableWrapper<Component[]>> {
+    const res = await api.get<GetComponentsResponse>("/api/v1/directory/component", {query: {page, size}});
     return transformResponse(res);
 }
