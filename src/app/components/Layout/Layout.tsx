@@ -4,15 +4,13 @@ import Menu from "../Menu/Menu";
 export default function Layout() {
     return (
         <div className={styles.layout}>
-            <header className={styles.header}>
-                
-            </header>
-            <section className={styles.content}>
-                <Outlet />
-            </section>
-            <aside className={styles.menu}>
-                <Menu />
-            </aside>
+            {/* <header className={styles.header}>
+
+            </header> */}
+            {/* <section className={styles.content}>
+                <Outlet />  
+            </section> */}
+            <Menu content={<Outlet />} />
         </div>
     )
 }

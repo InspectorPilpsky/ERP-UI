@@ -1,43 +1,36 @@
-import styles from './styles.module.css'
-import home_icon from '../../../assets/home.png'
-import { NavLink } from 'react-router-dom'
-import clsx from 'clsx'
+import { AsideHeader, MenuItem } from "@gravity-ui/navigation";
+import { getMenuItems } from "./menuItems";
+import { ReactNode, useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function Menu() {
-    return (
-        <div className={styles.sidebar}>
-            <div className={styles.header}>
-                <picture>
-                    <img src={home_icon} />
-                </picture>
-                Меню
-            </div>
-            <div className="navigation">
-                <NavLink to="/orders">
-                    {({isActive}) => 
-                        <MenuItem label="ЗАКАЗЫ" isActive={isActive} />}
-                </NavLink>
-                <NavLink to="/manufactoring">
-                    {({isActive}) => 
-                        <MenuItem label="ПРОИЗВОДСТВО" isActive={isActive} />}
-                </NavLink>
-                <NavLink to="/techcards">
-                    {({isActive}) => 
-                        <MenuItem label="ТЕХНОЛОГИЧЕСКИЕ КАРТЫ" isActive={isActive} />}
-                </NavLink>
-                <NavLink to="/components">
-                    {({isActive}) => 
-                        <MenuItem label="КОМПОНЕНТЫ" isActive={isActive} />}
-                </NavLink>
-                <NavLink to="/categories">
-                    {({isActive}) => 
-                        <MenuItem label="КАТЕГОРИИ" isActive={isActive} />}
-                </NavLink>
-            </div>
-        </div>
-    )
+interface Props {
+    content: ReactNode
 }
 
-function MenuItem({label, isActive}: {label: string, isActive: boolean}) {
-    return <div className={clsx(styles['navigation-item'],{[styles.active]: isActive})}>{label}</div>
+export default function Menu({ content = undefined }: Props) {
+
+    const navigate = useNavigate();
+
+    const [compact, setCompact] = useState(false);
+
+    const menuItemClickHandler = useCallback((item: MenuItem) => {
+        navigate(item.id ? `/${item.id}` : "#");
+    }, [navigate])
+    return (
+        <AsideHeader
+            logo={{
+                text: 'NNTeam ERP- UI',
+                href: '#',
+                onClick: () => alert('click on logo'),
+            }}
+            compact={compact}
+            menuItems={getMenuItems(menuItemClickHandler)}
+            onChangeCompact={(v) => {
+                setCompact(v);
+            }}
+            renderContent={() => content}
+            customBackgroundClassName="aside-header__custom-background"
+            customBackground={<img src="https://discovery.sndimg.com/content/dam/images/discovery/fullset/2022/4/20/GettyImages-678915345.jpg.rend.hgtvcom.1280.1280.suffix/1650480060448.jpeg" />}
+        />
+    )
 }
