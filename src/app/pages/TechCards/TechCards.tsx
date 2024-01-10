@@ -22,8 +22,6 @@ export default function TechCards() {
         setPageState((prevState) => ({ ...prevState, page, pageSize }));
 
     const request = useCallback(() => {
-        console.log('Кчау');
-
         getTechCards(pageState.page - 1, pageState.pageSize)
             .then(res => setTechCards(res));
     }, [pageState.page, pageState.pageSize])
@@ -51,7 +49,6 @@ export default function TechCards() {
                 <div className={styles.techCardBoard}>
                     {/* <pre>{JSON.stringify(techCards, null, 2)}</pre> */}
                     <div className={styles.table}>
-                        {/* <TechCardsTable onClick={handleTechCardClick}>{techCards.content}</TechCardsTable> */}
                         <Table
                             data={techCards.content}
                             columns={[
@@ -67,23 +64,22 @@ export default function TechCards() {
                         </Button>
                     </div>
                     <Card className={styles.techCardInfo}>
-                            {!techCardInfo && "Ничего не выбрано"}
-                            {techCardInfo &&
+                        {!techCardInfo && "Ничего не выбрано"}
+                        {techCardInfo &&
+                            <>
+                                <Table className={styles.techCardComponents}
+                                    data={techCardInfo.components}
+                                    columns={[
+                                        { id: "name", name: "Наименование", template: (component) => component.component.name },
+                                        { id: "category", name: "Категория", template: (component) => component.component.category.name },
+                                        { id: "quantity", name: "Количество", template: (component) => component.quantity }
+                                    ]}
+                                />
                                 <div>
-                                    <table>
-                                        {techCardInfo.components.map(component =>
-                                            <tr>
-                                                <td>{component.component.name}</td>
-                                                <td>{component.component.category.name}</td>
-                                                <td>{component.quantity}</td>
-                                            </tr>
-                                        )}
-                                    </table>
-                                    <div>
-                                        <Button view="raised" size="l">Отправить в производство</Button>
-                                    </div>
-                                </ div>
-                            }
+                                    <Button view="raised" size="l">Отправить в производство</Button>
+                                </div>
+                            </>
+                        }
                     </Card>
                 </div>
             </div>

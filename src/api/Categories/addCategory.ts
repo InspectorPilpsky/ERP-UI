@@ -1,4 +1,4 @@
-import api from "../api";
+import { techCardsApi } from "../api";
 import { Category } from "./domain/Category";
 import { CategoryDTO } from "./dto/Category.dto";
 import { categoryDTOToCategory } from "./transformers/fromDto";
@@ -16,6 +16,6 @@ function transformResponse(res: CategoryDTO): Category {
 
 export async function addCategory(category: Category): Promise<Category> {
     const req = transformRequest(category);
-    const res = await api.post<addCategoryResponse, CategoryDTO>("/api/v1/directory/category", req);
+    const res = await techCardsApi.post<addCategoryResponse, CategoryDTO>("/api/v1/directory/category", req);
     return transformResponse(res);
 }

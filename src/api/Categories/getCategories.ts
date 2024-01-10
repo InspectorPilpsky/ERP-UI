@@ -1,4 +1,4 @@
-import api from "../api";
+import { techCardsApi } from "../api";
 import { PageableWrapper } from "../pageable";
 import { Category } from "./domain/Category";
 import { CategoryDTO } from "./dto/Category.dto";
@@ -13,7 +13,7 @@ function transformResponse(res: GetCategoriesResponse): PageableWrapper<Category
     }
 }
 
-export async function getCategories(): Promise<PageableWrapper<Category[]>> {
-    const res = await api.get<GetCategoriesResponse>("/api/v1/directory/category");
+export async function getCategories(page: number, size: number): Promise<PageableWrapper<Category[]>> {
+    const res = await techCardsApi.get<GetCategoriesResponse>("/api/v1/directory/category", {query: {page, size}});
     return transformResponse(res);
 }

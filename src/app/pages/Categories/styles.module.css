@@ -12,17 +12,6 @@
     width: 100%;
 }
 
-.categoriesGrid {
-    display: flex;
-    padding: 12px;
-    align-items: flex-start;
-    align-content: flex-start;
-    gap: 30px;
-    flex: 1 0 0;
-    align-self: stretch;
-    flex-wrap: wrap;
-}
-
 .title {
     display: flex;
     padding: 12px;
@@ -34,6 +23,17 @@
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+}
+
+.categoriesGrid {
+    display: flex;
+    padding: 12px;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 30px;
+    flex: 1 0 0;
+    align-self: stretch;
+    flex-wrap: wrap;
 }
 
 .pagination {

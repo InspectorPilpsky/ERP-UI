@@ -43,7 +43,7 @@ export class Api {
     ): Promise<Response> {
             let params = "";
             if(options.query) {
-                params = "?" + new URLSearchParams(Object.entries(options.query)).toString();
+                params = "?" + new URLSearchParams(Object.entries(options.query).filter(p => p[1] !== null)).toString();
             }
             const reqURL = (new URL(url, this.baseURL)).href;
             const opts = options.data ?
@@ -68,5 +68,8 @@ export class Api {
 }
 
 // const api = new Api("http://95.131.148.179:8080");
-const api = new Api("http://158.160.136.142:8081");
-export default api;
+export const techCardsApi = new Api("http://158.160.136.142:8081");
+
+export const warehouseApi = new Api("http://158.160.136.142:8087");
+
+export const managementApi = new Api("http://158.160.136.142:8086");
