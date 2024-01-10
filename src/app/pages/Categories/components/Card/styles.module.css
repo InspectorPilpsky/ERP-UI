@@ -14,13 +14,24 @@
 .content {
     display: flex;
     align-items: center;
-    gap: 25px;
+    width: 100%;
+    gap: 8px;
     color: #000;
     font-family: Inter;
     font-size: 25px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+}
+
+.content svg {
+    width: 32px;
+}
+
+.content span {
+    overflow-wrap: break-word;
+    max-width: 200px;
+    ;
 }
 
 .qty {

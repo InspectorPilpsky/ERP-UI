@@ -23,9 +23,9 @@ export default function Categories() {
     })
 
     const request = useCallback(() => {
-        getCategories()
+        getCategories(pageState.page - 1, pageState.pageSize)
             .then(res => setCategories(res));
-    }, [])
+    }, [pageState.page, pageState.pageSize])
 
     const handleCategoryEdit = useCallback((categoryName: string) => {
         setEditCategory(prev => ({ ...prev, name: categoryName }))
@@ -34,16 +34,14 @@ export default function Categories() {
     const handleAddCategory = useCallback(() => {
         addCategory(editCategory)
             .finally(() => request())
-    }, [])
+    }, [editCategory, request])
 
     useEffect(() => {
         request()
-    }, [])
+    }, [request])
 
     return (
         <div className={styles.pageWrapper}>
-
-            {/* <div className={styles.categories}> */}
             <GravityCard view="raised" className={styles.categories}> 
                 <div className={styles.title}>Категории</div>
                 <div className={styles.categoriesGrid}>
@@ -55,14 +53,13 @@ export default function Categories() {
                     />
                 </div>
             </GravityCard>
-            {/* </div> */}
             <div className={styles.pagination}>
                 <Pagination
                     compact={false}
                     page={pageState.page}
                     pageSize={pageState.pageSize}
                     pageSizeOptions={[10, 50, 100]}
-                    total={100}
+                    total={categories.totalElements}
                     onUpdate={handleUpdate} />
             </div>
 

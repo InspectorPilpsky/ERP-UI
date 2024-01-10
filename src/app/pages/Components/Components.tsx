@@ -1,49 +1,101 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import styles from './styles.module.css'
 import { Component } from '../../../api/Components/domain/Component';
-import { getComponents } from '../../../api/Components/getComponents';
+import { ComponentFilter, getComponents } from '../../../api/Components/getComponents';
 import { PAGEABLE_DEFAULT, PageableWrapper } from '../../../api/pageable';
-import Drawer from '../../components/Drawer/Drawer';
-import { Button, Pagination, PaginationProps, Table, TextInput } from '@gravity-ui/uikit';
-import { Magnifier } from '@gravity-ui/icons';
+import { Button, Icon, Pagination, PaginationProps, Select, Table, TextInput } from '@gravity-ui/uikit';
+import { Magnifier, Plus } from '@gravity-ui/icons';
+import { getCategories } from '../../../api/Categories/getCategories';
+import { Category } from '../../../api/Categories/domain/Category';
+import { useSearchParams } from 'react-router-dom';
+import ComponentAddDrawer from './components/ComponentAddDrawer';
+import { addComponent } from '../../../api/Components/addComponent';
+
+const DEFAULT_CATEGORY: Category = {
+    id: -1,
+    name: 'Все',
+    quantity: 0
+}
 
 export default function Components() {
 
+    const [qParams, setQParams] = useSearchParams();
+
+    const [filters, setFilters] = useState<ComponentFilter>({ code: null, categoryId: Number(qParams.get('categoryId')) || -1 });
+
     const [components, setComponents] = useState<PageableWrapper<Component[]>>(PAGEABLE_DEFAULT);
 
-    const [componentInfo, setComponentInfo] = useState<Component | null>(null);
+    const [addDrawerIsVisible, setAddDrawerIsVisible] = useState(false);
 
+    const [categories, setCategories] = useState<Category[]>([DEFAULT_CATEGORY])
+    
     const [pageState, setPageState] = useState({ page: 1, pageSize: 10, total: 1 });
+    
+    const categoryId = useMemo(() => filters.categoryId?.toString() || "-1", [filters.categoryId])
+    
+    const categoriesOpts: Array<{value: string, content: string}> = useMemo(() =>
+        [
+            { value: "-1", content: "Все" },
+            ...categories.map((c) => ({ value: c.id?.toString() || "-1", content: `${c.name} (${c.quantity})` }))
+        ], [categories])
 
     const handleUpdate: PaginationProps['onUpdate'] = (page, pageSize) =>
         setPageState((prevState) => ({ ...prevState, page, pageSize }));
 
-    const handleComponentClick = useCallback((component: Component) => {
-        setComponentInfo(component);
-    }, []);
-
     const request = useCallback(() => {
-        getComponents(pageState.page - 1, pageState.pageSize)
+        getComponents(pageState.page - 1, pageState.pageSize, filters)
             .then(res => setComponents(res));
-    }, [pageState])
+    }, [filters, pageState.page, pageState.pageSize])
+
+    const addNewComponent = useCallback((component: Component) => {
+        addComponent(component);
+    }, [])
+
+    useEffect(() => {
+
+        const catId = Number(qParams.get("categoryId"));
+
+        setFilters(prev => ({ ...prev, categoryId: catId > 0 ? catId : -1 }))
+    }, [qParams])
 
     useEffect(() => request(), [request])
 
+    useEffect(() => {
+        getCategories(0, 1000)
+            .then(res => setCategories(res.content))
+    }, [])
+
     return (
         <div className={styles.pageWrapper}>
-            {componentInfo &&
-                <Drawer
-                    category={componentInfo.category.name}
-                    onClose={() => setComponentInfo(null)}
-                >
-                    <span>
-                        {componentInfo.name}
-                    </span>
-                </Drawer>}
+            <ComponentAddDrawer
+                isVisible={addDrawerIsVisible}
+                onAdd={addNewComponent}
+                onClose={() => {console.log("onClose");
+                setAddDrawerIsVisible(false)}} 
+                categories={categories}
+                categoriesOpts={categoriesOpts} />
             <div className={styles.components}>
                 <div className={styles.header}>
-                    <div className={styles.headerTitle}>Компоненты</div>
+                    <div className={styles.headerTitle}>
+                        Компоненты
+                        <Button
+                            size="l"
+                            view="action"
+                            onClick={() => setAddDrawerIsVisible(true)}
+                        >
+                            <Icon data={Plus} />
+                            Добавить
+                        </Button>
+                    </div>
                     <div className={styles.headerFilters}>
+                        <Select
+                            size='xl'
+                            placeholder="Категория"
+                            value={[categoriesOpts.find(opt => opt.value === categoryId)?.value || "-1"]}
+                            options={categoriesOpts}
+                            // onUpdate={([category]) => setFilters(prev => ({ ...prev, categoryId: Number(category) }))}
+                            onUpdate={([category]) => setQParams({ categoryId: category })}
+                        />
                         <TextInput
                             size="xl"
                             placeholder='Найти'
@@ -66,12 +118,7 @@ export default function Components() {
                         { id: "code", name: "Код" },
                         { id: "stock", name: "Наличие" },
                     ]}
-                    onRowClick={handleComponentClick}
                 />
-                {/* <ComponentsTable
-                    onClick={handleComponentClick}>
-                    {components.content}
-                </ComponentsTable> */}
             </div>
             <div className={styles.pagination}>
                 <Pagination

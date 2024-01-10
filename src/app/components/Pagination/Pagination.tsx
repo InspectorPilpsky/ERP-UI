@@ -26,8 +26,6 @@ export default function Pagination({ pageable: { number, totalPages }, onChange 
     }, [number, totalPages]);
 
     const handlePageChange = (page: string) => {
-        console.log('page', page);
-
         if (page !== "...") {
             onChange(Number(page) - 1);
         }

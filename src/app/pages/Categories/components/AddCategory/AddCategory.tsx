@@ -28,7 +28,7 @@ export default function AddCategory({ category, onChange, onAdd }: Props) {
                 className={clsx(styles.card, styles.back)}
             >
                 <div className={styles.input}>
-                    <TextInput label="Наименование"
+                    <TextInput
                         placeholder='Введите наименование категории'
                         value={category?.name}
                         onChange={(e) => onChange && onChange(e.target.value)} />

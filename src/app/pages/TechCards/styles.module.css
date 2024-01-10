@@ -6,6 +6,17 @@
     height: 100%;
 }
 
+.techCards {
+    display: flex;
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    flex: 1 0 0;
+    align-self: stretch;
+}
+
+
 .header {
     display: flex;
     padding: 12px;
@@ -29,16 +40,6 @@
     gap: 16px;
 }
 
-.techCards {
-    display: flex;
-    padding: 16px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-    flex: 1 0 0;
-    align-self: stretch;
-}
-
 .techCardBoard {
     display: flex;
     align-items: flex-start;
@@ -46,21 +47,10 @@
     align-self: stretch;
 }
 
-.techCardsActions {
+.table {
     display: flex;
-    padding: 20px 46px 20px 16px;
+    flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
-    gap: 20px;
-    align-self: stretch;
-    border-radius: 10px;
-    background: #FAFAFA;
-    color: #717171;
-    font-family: Inter;
-    font-size: 25px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
 }
 
 .techCardInfo {
@@ -75,16 +65,18 @@
     align-self: stretch;
 }
 
+.techCardComponents {
+    width: 100%;
+}
+
+.techCardComponents table {
+    width: 100%;
+}
+
 .pagination {
     display: flex;
     padding: 24px 0px;
     flex-direction: column;
     align-items: center;
     align-self: stretch;
-}
-
-.table {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 }

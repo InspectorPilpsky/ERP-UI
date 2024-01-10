@@ -6,6 +6,19 @@
     height: 100%;
 }
 
+.components {
+    display: flex;
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    flex: 1 0 0;
+    align-self: stretch;
+    border-radius: 24px;
+    background: #FFF;
+    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
 .header {
     display: flex;
     padding: 12px;
@@ -15,6 +28,8 @@
 }
 
 .headerTitle {
+    display: flex;
+    gap: 24px;
     color: #000;
     font-family: Inter;
     font-size: 25px;
@@ -27,19 +42,6 @@
     display: flex;
     flex-flow: row;
     gap: 16px;
-}
-
-.components {
-    display: flex;
-    padding: 16px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-    flex: 1 0 0;
-    align-self: stretch;
-    border-radius: 24px;
-    background: #FFF;
-    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 .componentsTable {
