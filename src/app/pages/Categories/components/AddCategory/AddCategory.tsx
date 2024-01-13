@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import styles from './styles.module.css'
 import { useState } from 'react';
 import { Category } from '../../../../../api/Categories/domain/Category';
+import { Card as GravityCard } from '@gravity-ui/uikit';
 import { Button, TextInput } from '@gravity-ui/uikit';
 
 interface Props {
@@ -15,7 +16,7 @@ export default function AddCategory({ category, onChange, onAdd }: Props) {
     const [isActive, setIsActive] = useState(false);
 
     return (
-        <div className={clsx(styles.cardWrap, { [styles.active]: isActive })}>
+        <GravityCard view="raised" className={clsx(styles.cardWrap, { [styles.active]: isActive })}>
             <div
                 className={clsx(styles.card, styles.front)}
                 onClick={() => setIsActive(true)}>
@@ -43,6 +44,6 @@ export default function AddCategory({ category, onChange, onAdd }: Props) {
                     </Button>
                 </div>
             </div>
-        </div>
+        </GravityCard>
     )
 }
