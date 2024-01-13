@@ -7,12 +7,13 @@ import { PAGEABLE_DEFAULT, PageableWrapper } from "../../../api/pageable";
 import AddCategory from "./components/AddCategory/AddCategory";
 import { addCategory } from "../../../api/Categories/addCategory";
 import { Pagination, PaginationProps } from "@gravity-ui/uikit";
-import { Card as GravityCard} from '@gravity-ui/uikit';
+import { Card as GravityCard } from '@gravity-ui/uikit';
+import { deleteCategory } from "../../../api/Categories/deleteCategory";
 
 export default function Categories() {
     const [categories, setCategories] = useState<PageableWrapper<Category[]>>(PAGEABLE_DEFAULT)
 
-    const [pageState, setPageState] = useState({ page: 1, pageSize: 10 });
+    const [pageState, setPageState] = useState({ page: 1, pageSize: 11 });
     const handleUpdate: PaginationProps['onUpdate'] = (page, pageSize) =>
         setPageState((prevState) => ({ ...prevState, page, pageSize }));
 
@@ -31,6 +32,13 @@ export default function Categories() {
         setEditCategory(prev => ({ ...prev, name: categoryName }))
     }, [])
 
+    const handleCategoryDelete = useCallback((id: Category["id"]) => {
+        deleteCategory(id)
+        .then(() => {
+            request();
+        })
+    }, [request])
+
     const handleAddCategory = useCallback(() => {
         addCategory(editCategory)
             .finally(() => request())
@@ -42,10 +50,17 @@ export default function Categories() {
 
     return (
         <div className={styles.pageWrapper}>
-            <GravityCard view="raised" className={styles.categories}> 
+            <GravityCard view="raised" className={styles.categories}>
                 <div className={styles.title}>Категории</div>
                 <div className={styles.categoriesGrid}>
-                    {categories?.content.map(c => <Card qty={c.quantity}>{c.name}</Card>)}
+                    {categories?.content.map(c =>
+                        <Card
+                            key={c.id}
+                            qty={c.quantity}
+                            onDelete={() => handleCategoryDelete(c.id)}>
+                            {c.name}
+                        </Card>)
+                    }
                     <AddCategory
                         category={editCategory}
                         onChange={handleCategoryEdit}
