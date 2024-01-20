@@ -15,7 +15,6 @@ export default function Card({ children, qty, onDelete }: Props) {
     const [isActive, setIsActive] = useState(false);
 
     return (
-
         <GravityCard view="raised">
             <div className={clsx(styles.cardWrap, { [styles.active]: isActive })}>
                 <div className={clsx(styles.content, styles.front)}>

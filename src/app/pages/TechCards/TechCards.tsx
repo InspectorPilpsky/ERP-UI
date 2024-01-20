@@ -51,7 +51,7 @@ export default function TechCards() {
 
     const handleUpdate: PaginationProps['onUpdate'] = (page, pageSize) =>
         setPageState((prevState) => ({ ...prevState, page, pageSize }));
-
+  
     const handleSaveTechCard = useCallback((techCard: TechCardType) => {
         console.log('handleSaveTechCard', techCard);
         saveTechCard(techCard);

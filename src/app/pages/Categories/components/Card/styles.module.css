@@ -83,6 +83,16 @@
     line-height: normal;
 }
 
+.content svg {
+    width: 32px;
+}
+
+.content span {
+    overflow-wrap: break-word;
+    max-width: 200px;
+    ;
+}
+
 .qty {
     text-align: right;
     color: #818181;
