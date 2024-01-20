@@ -1,4 +1,4 @@
-import { Category } from "@domain";
+import { Category } from "@domain/Category";
 import { PageableWrapper } from "../pageable";
 import { CategoryDTO } from "./dto/Category.dto";
 import { categoryDTOToCategory } from "./transformers/fromDto";

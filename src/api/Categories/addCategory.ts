@@ -1,6 +1,4 @@
-
-
-import { Category } from "@domain";
+import { Category } from "@domain/Category";
 import { CategoryDTO } from "./dto/Category.dto";
 import { categoryDTOToCategory } from "./transformers/fromDto";
 import { categoryToCategoryDTO } from "./transformers/toDto";

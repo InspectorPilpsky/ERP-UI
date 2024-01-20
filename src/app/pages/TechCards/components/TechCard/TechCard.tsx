@@ -1,14 +1,27 @@
 import { TechCard } from "@domain/TechCard";
 import TechCardInfo from "./Info/TechCardInfo";
+import TechCardEdit from "./Edit/TechCardEdit";
+import { useState } from "react";
+import { Button } from "@gravity-ui/uikit";
+import { Component } from "@domain/Component";
 
 interface Props {
-    mode: "INFO" | "EDIT";
     techCard: TechCard;
+    componentsList: Component[];
+    onSave?: (techCard: TechCard) => void;
 }
 
-export default function TechCardView({mode, techCard}: Props) {
+export default function TechCardView({ techCard, componentsList, onSave }: Props) {
+
+    const [mode, setMode] = useState<"INFO" | "EDIT">("INFO");
 
     return (
-        mode === "INFO" ? <TechCardInfo components={techCard.components} /> : <div>TECH CARD EDIT</div>
+        <div>
+            {mode === "INFO" ?
+                <Button onClick={() => setMode("EDIT")}>Редактировать</Button> :
+                <Button onClick={() => setMode("INFO")}>Отмена</Button>}
+            {mode === "INFO" ? <TechCardInfo components={techCard.components} /> :
+                <TechCardEdit techCard={techCard} componentsList={componentsList} onSave={onSave}/>}
+        </div>
     )
 }

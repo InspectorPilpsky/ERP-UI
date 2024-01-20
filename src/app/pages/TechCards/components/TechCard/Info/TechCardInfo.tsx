@@ -1,6 +1,6 @@
-import { Button, Table } from "@gravity-ui/uikit";
-import { TechCard } from "@domain";
+import { Table } from "@gravity-ui/uikit";
 import styles from './styles.module.css';
+import { TechCard } from "@domain/TechCard";
 
 interface Props {
     components: TechCard["components"];
@@ -9,7 +9,6 @@ interface Props {
 export default function TechCardInfo({components}: Props) {
 
     return (
-        <>
             <Table className={styles.techCardComponents}
                 data={components}
                 columns={[
@@ -18,9 +17,5 @@ export default function TechCardInfo({components}: Props) {
                     { id: "quantity", name: "Количество", template: (component) => component.quantity }
                 ]}
             />
-            <div>
-                <Button view="raised" size="l">Отправить в производство</Button>
-            </div>
-        </>
     )
 }

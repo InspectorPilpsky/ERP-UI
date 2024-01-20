@@ -1,8 +1,8 @@
-import { TechCard } from "@domain";
 import { techCardsApi } from "@api/api";
 import { PageableWrapper } from "../pageable";
 import { TechCardDTO } from "./dto/TechCard.dto";
 import { techCardDTOToTechCard } from "./transforers/fromDto";
+import { TechCard } from "@domain/TechCard";
 
 type GetTechCardsResponse = PageableWrapper<TechCardDTO[]>;
 
