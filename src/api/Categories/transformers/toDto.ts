@@ -1,4 +1,4 @@
-import { Category } from "../domain/Category";
+import { Category } from "../../../domain/Category";
 import { CategoryDTO } from "../dto/Category.dto";
 
 export function categoryToCategoryDTO(category: Category): CategoryDTO {

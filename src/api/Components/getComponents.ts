@@ -1,9 +1,9 @@
 import { CategoryDTO } from "../Categories/dto/Category.dto";
-import { techCardsApi } from "../api";
+import { techCardsApi } from "@api/api";
 import { PageableWrapper } from "../pageable";
-import { Component } from "./domain/Component";
 import { ComponentDTO } from "./dto/Component.dto";
 import { componentDTOToComponent } from "./transformers/fromDto";
+import { Component } from "@domain/Component";
 
 type GetComponentsResponse = PageableWrapper<ComponentDTO[]>;
 

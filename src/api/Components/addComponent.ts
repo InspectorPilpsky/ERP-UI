@@ -1,7 +1,7 @@
-import { techCardsApi } from "../api";
-import { Component } from "./domain/Component";
+import { Component } from "@domain/Component";
 import { ComponentDTO } from "./dto/Component.dto";
 import { componentTocomponentDTO } from "./transformers/toDto";
+import { techCardsApi } from "@api/api";
 
 export async function addComponent(component: Component): Promise<number> {
     

@@ -1,5 +1,5 @@
 import { categoryToCategoryDTO } from "../../Categories/transformers/toDto";
-import { Component } from "../domain/Component";
+import { Component } from "../../../domain/Component";
 import { ComponentDTO } from "../dto/Component.dto";
 
 export function componentTocomponentDTO(component: Component): ComponentDTO {

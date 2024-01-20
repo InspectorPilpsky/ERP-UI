@@ -1,9 +1,9 @@
-import { Component } from '../../../../api/Components/domain/Component';
+import { Component } from '../../../../domain/Component';
 import styles from './styles.module.css'
 import Drawer from '../../../components/Drawer/Drawer';
 import { Button, Select, TextInput } from '@gravity-ui/uikit';
 import { useCallback, useState } from 'react';
-import { Category } from '../../../../api/Categories/domain/Category';
+import { Category } from '../../../../domain/Category';
 
 interface Props {
     isVisible: boolean;

@@ -1,8 +1,8 @@
-import { techCardsApi } from "../api";
+import { Category } from "@domain/Category";
 import { PageableWrapper } from "../pageable";
-import { Category } from "./domain/Category";
 import { CategoryDTO } from "./dto/Category.dto";
 import { categoryDTOToCategory } from "./transformers/fromDto";
+import { techCardsApi } from "@api/api";
 
 type GetCategoriesResponse = PageableWrapper<CategoryDTO[]>;
 
