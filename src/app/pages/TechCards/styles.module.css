@@ -65,14 +65,6 @@
     align-self: stretch;
 }
 
-.techCardComponents {
-    width: 100%;
-}
-
-.techCardComponents table {
-    width: 100%;
-}
-
 .pagination {
     display: flex;
     padding: 24px 0px;

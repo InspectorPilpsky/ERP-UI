@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import styles from './styles.module.css'
-import { PAGEABLE_DEFAULT, PageableWrapper } from '../../../api/pageable';
-import { getTechCards } from '../../../api/TechCards/getTechCards';
-import { TechCard } from '../../../api/TechCards/domain/TechCard';
 import { Button, Card, Icon, Pagination, PaginationProps, Table, TextInput } from '@gravity-ui/uikit';
 import { Magnifier, Plus } from '@gravity-ui/icons';
+import TechCardInfo from './components/TechCard/Info/TechCardInfo';
+import { PAGEABLE_DEFAULT, PageableWrapper } from '@api/pageable';
+import { TechCard } from '@domain/TechCard';
+import { getTechCards } from '@api/TechCards';
 
 export default function TechCards() {
 
@@ -65,21 +66,7 @@ export default function TechCards() {
                     </div>
                     <Card className={styles.techCardInfo}>
                         {!techCardInfo && "Ничего не выбрано"}
-                        {techCardInfo &&
-                            <>
-                                <Table className={styles.techCardComponents}
-                                    data={techCardInfo.components}
-                                    columns={[
-                                        { id: "name", name: "Наименование", template: (component) => component.component.name },
-                                        { id: "category", name: "Категория", template: (component) => component.component.category.name },
-                                        { id: "quantity", name: "Количество", template: (component) => component.quantity }
-                                    ]}
-                                />
-                                <div>
-                                    <Button view="raised" size="l">Отправить в производство</Button>
-                                </div>
-                            </>
-                        }
+                        {techCardInfo && <TechCardInfo components={techCardInfo.components} />}
                     </Card>
                 </div>
             </div>

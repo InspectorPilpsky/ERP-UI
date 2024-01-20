@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import styles from './styles.module.css'
-import { Component } from '../../../api/Components/domain/Component';
+import { Component } from '../../../domain/Component';
 import { ComponentFilter, getComponents } from '../../../api/Components/getComponents';
 import { PAGEABLE_DEFAULT, PageableWrapper } from '../../../api/pageable';
 import { Button, Icon, Pagination, PaginationProps, Select, Table, TextInput } from '@gravity-ui/uikit';
 import { Magnifier, Plus } from '@gravity-ui/icons';
 import { getCategories } from '../../../api/Categories/getCategories';
-import { Category } from '../../../api/Categories/domain/Category';
+import { Category } from '../../../domain/Category';
 import { useSearchParams } from 'react-router-dom';
 import ComponentAddDrawer from './components/ComponentAddDrawer';
 import { addComponent } from '../../../api/Components/addComponent';

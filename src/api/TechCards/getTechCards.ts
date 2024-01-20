@@ -1,6 +1,6 @@
-import { techCardsApi } from "../api";
+import { TechCard } from "@domain";
+import { techCardsApi } from "@api/api";
 import { PageableWrapper } from "../pageable";
-import { TechCard } from "./domain/TechCard";
 import { TechCardDTO } from "./dto/TechCard.dto";
 import { techCardDTOToTechCard } from "./transforers/fromDto";
 

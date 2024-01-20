@@ -1,5 +1,5 @@
+import { TechCard } from "@domain";
 import { componentDTOToComponent } from "../../Components/transformers/fromDto";
-import { TechCard } from "../domain/TechCard";
 import { TechCardDTO } from "../dto/TechCard.dto";
 
 export function techCardDTOToTechCard(techCardDto: TechCardDTO): TechCard {

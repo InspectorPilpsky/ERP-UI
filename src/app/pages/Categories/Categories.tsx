@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import Card from "./components/Card/Card";
 import styles from './styles.module.css'
 import { getCategories } from "../../../api/Categories/getCategories";
-import { Category } from "../../../api/Categories/domain/Category";
+import { Category } from "../../../domain/Category";
 import { PAGEABLE_DEFAULT, PageableWrapper } from "../../../api/pageable";
 import AddCategory from "./components/AddCategory/AddCategory";
 import { addCategory } from "../../../api/Categories/addCategory";

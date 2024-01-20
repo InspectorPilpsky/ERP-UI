@@ -1,4 +1,5 @@
-import { Component } from "../../Components/domain/Component"
+import { Component } from "../Component"
+
 
 export type TechCard = {
     id: number | null,

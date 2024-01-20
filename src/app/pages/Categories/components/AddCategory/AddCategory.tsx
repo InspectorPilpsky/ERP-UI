@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import styles from './styles.module.css'
 import { useState } from 'react';
-import { Category } from '../../../../../api/Categories/domain/Category';
+import { Category } from '../../../../../domain/Category';
 import { Card as GravityCard } from '@gravity-ui/uikit';
 import { Button, TextInput } from '@gravity-ui/uikit';
 

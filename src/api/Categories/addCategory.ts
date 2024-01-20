@@ -1,8 +1,10 @@
-import { techCardsApi } from "../api";
-import { Category } from "./domain/Category";
+
+
+import { Category } from "@domain";
 import { CategoryDTO } from "./dto/Category.dto";
 import { categoryDTOToCategory } from "./transformers/fromDto";
 import { categoryToCategoryDTO } from "./transformers/toDto";
+import { techCardsApi } from "@api/api";
 
 type addCategoryResponse = CategoryDTO;
 

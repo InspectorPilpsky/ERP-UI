@@ -1,4 +1,4 @@
-import { Category } from "../../Categories/domain/Category"
+import { Category } from "./Category"
 
 export interface Component {
     id: number | null,
