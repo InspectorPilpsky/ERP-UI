@@ -17,6 +17,12 @@ export function getMenuItems(clickHandler: (item: MenuItem) => void): MenuItem[]
             onItemClick: clickHandler
         },
         {
+            id: 'warehouse',
+            title: 'СКЛАД',
+            icon: GearPlay,
+            onItemClick: clickHandler
+        },
+        {
             id: 'techcards',
             title: 'ТЕХНОЛОГИЧЕСКИЕ КАРТЫ',
             icon: Frame,
