@@ -4,7 +4,7 @@ import { Button, Card, Icon, Tabs } from "@gravity-ui/uikit";
 import { PAGEABLE_DEFAULT, PageableWrapper } from "@api/pageable";
 import { WarehouseShipment } from "@domain/Warehouse/WarehouseShipment";
 import { addWarehouseShipment, getWarehouseShipments, getWarehouseStock } from "@api/Warehouse";
-import { WarehouseStock } from "@domain/Warehouse/WarehouseStock";
+import { DEFAULT_WAREHOUSE_STOCK, WarehouseStock } from "@domain/Warehouse/WarehouseStock";
 import WarehouseStockView from "./components/WarehouseStockView/WarehouseStockView";
 import WarehouseShipmentsView from "./components/WarehouseShipmentsView/WarehouseShipmentsView";
 import { Plus } from "@gravity-ui/icons";
@@ -17,7 +17,7 @@ export default function Warehouse() {
 
     const [tab, setTab] = useState("stock");
     const [warehouseShipments, setWarehouseShipments] = useState<PageableWrapper<WarehouseShipment[]>>(PAGEABLE_DEFAULT);
-    const [warehouseStock, setWarehouseStock] = useState<PageableWrapper<WarehouseStock[]>>(PAGEABLE_DEFAULT);
+    const [warehouseStock, setWarehouseStock] = useState<WarehouseStock[]>([DEFAULT_WAREHOUSE_STOCK]);
     const [shipmentAdderIsVisible, setShipmentAdderIsVisible] = useState(false);
 
     const [components, setComponents] = useState<Component[]>([DEFAULT_COMPONENT]);
@@ -92,7 +92,6 @@ export default function Warehouse() {
                 {
                     tab === "shipments" ?
                         <>
-                            {/* <WarehouseShipmentForm /> */}
                             <Button view="raised" size="xl" onClick={handleAddShipment} style={{width: "fit-content"}}>
                                 <Icon data={Plus} />
                                 Добавить
@@ -109,7 +108,7 @@ export default function Warehouse() {
                             <WarehouseShipmentsView shipmentsData={warehouseShipments.content} />
                         </>
                         :
-                        <WarehouseStockView stockData={warehouseStock.content} />
+                        <WarehouseStockView stockData={warehouseStock} />
                 }
             </Card>
         </div>
