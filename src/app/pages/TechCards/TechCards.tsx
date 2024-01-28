@@ -8,7 +8,8 @@ import { getTechCards } from '@api/TechCards';
 import TechCard from './components/TechCard/TechCard';
 import { Component } from '@domain/Component';
 import { getComponents } from '@api/Components';
-import { saveTechCard } from '@api/TechCards/saveTechCards';
+import { saveTechCard } from '@api/TechCards/saveTechCard';
+import { deleteTechCard } from '@api/TechCards/deleteTechCard';
 
 const DEFAULT_TECH_CARD: TechCardType = {
     "id": null,
@@ -49,13 +50,18 @@ export default function TechCards() {
         setTechCardInfo(techCard);
     }, [])
 
-    const handleUpdate: PaginationProps['onUpdate'] = (page, pageSize) =>
+    const handleUpdate: PaginationProps['onUpdate'] = (page: number, pageSize: number) =>
         setPageState((prevState) => ({ ...prevState, page, pageSize }));
   
     const handleSaveTechCard = useCallback((techCard: TechCardType) => {
-        console.log('handleSaveTechCard', techCard);
-        saveTechCard(techCard);
+        saveTechCard(techCard)
+        .then(() => {request()});
     }, [])
+
+    const handleDeleteTechCard = useCallback((techCard: TechCardType) => {
+        deleteTechCard(techCard.id)
+        .finally(() => {request()})
+    }, []);
 
     const handleAddComponent = useCallback(() => {
         setTechCards(prev => ({...prev, content: [...prev.content, DEFAULT_TECH_CARD]})) 
@@ -116,6 +122,7 @@ export default function TechCards() {
                                     techCard={techCardInfo}
                                     componentsList={components.content}
                                     onSave={handleSaveTechCard}
+                                    onDelete={handleDeleteTechCard}
                                 />
                                 <Button view="raised" size="l">Отправить в производство</Button>
                             </>

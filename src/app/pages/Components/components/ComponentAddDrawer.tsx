@@ -1,9 +1,9 @@
-import { Component } from '../../../../domain/Component';
 import styles from './styles.module.css'
 import Drawer from '../../../components/Drawer/Drawer';
 import { Button, Select, TextInput } from '@gravity-ui/uikit';
 import { useCallback, useState } from 'react';
-import { Category } from '../../../../domain/Category';
+import { Component, DEFAULT_COMPONENT } from '@domain/Component';
+import { Category } from '@domain/Category';
 
 interface Props {
     isVisible: boolean;
@@ -11,19 +11,6 @@ interface Props {
     categoriesOpts: Array<{ value: string, content: string }>;
     onClose: () => void;
     onAdd?: (component: Component) => void;
-}
-
-const DEFAULT_COMPONENT: Component = {
-    id: null,
-    name: '',
-    unit: '',
-    code: '',
-    stock: 0,
-    category: {
-        id: null,
-        name: '',
-        quantity: 0
-    }
 }
 
 export default function ComponentAddDrawer({ isVisible, categories, categoriesOpts, onClose, onAdd }: Props) {

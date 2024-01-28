@@ -8,3 +8,16 @@ export interface Component {
     stock: number,
     category: Category
 }
+
+export const DEFAULT_COMPONENT: Component = {
+    id: null,
+    name: '',
+    unit: '',
+    code: '',
+    stock: 0,
+    category: {
+        id: null,
+        name: '',
+        quantity: 0
+    }
+}
