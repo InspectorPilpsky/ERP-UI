@@ -1,5 +1,5 @@
 import { MenuItem } from "@gravity-ui/navigation";
-import {Receipt, Puzzle, GearPlay, Frame, Tag} from '@gravity-ui/icons';
+import {Receipt, Puzzle, GearPlay, Frame, Tag, Boxes3} from '@gravity-ui/icons';
 
 export function getMenuItems(clickHandler: (item: MenuItem) => void): MenuItem[] {
  return(
@@ -19,7 +19,7 @@ export function getMenuItems(clickHandler: (item: MenuItem) => void): MenuItem[]
         {
             id: 'warehouse',
             title: 'СКЛАД',
-            icon: GearPlay,
+            icon: Boxes3,
             onItemClick: clickHandler
         },
         {
