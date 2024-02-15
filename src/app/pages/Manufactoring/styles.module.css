@@ -1,0 +1,44 @@
+.pageWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    height: 100%;
+    padding: 12px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
+}
+
+.headerTitle {
+    display: flex;
+    gap: 24px;
+    color: #000;
+    font-family: Inter;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.pageContent {
+    height: 100%;
+    width: 100%;
+    padding: 16px;
+}
+
+.drawer {
+    z-index: 3;
+}
+
+.table {
+    width: 100%;
+}
+
+.table Table {
+    width: 100%;
+}

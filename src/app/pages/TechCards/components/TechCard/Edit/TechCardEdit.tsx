@@ -32,8 +32,6 @@ export default function TechCardEdit({ componentsList, techCard, onSave }: Props
         // eslint-disable-next-line
         // @ts-ignore
         setTechCardForm(prev => {
-
-            console.log('handleAddComponent', prev);
             return ({ ...prev, components: [...prev.components, { id: null, quantity: 1, component: DEFAULT_COMPONENT }] })
         })
     }, [])

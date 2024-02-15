@@ -11,7 +11,6 @@ import { Plus } from "@gravity-ui/icons";
 import ShipmentAdd from "./components/ShipmentAdd/ShipmentAdd";
 import { Component, DEFAULT_COMPONENT } from "@domain/Component";
 import { getComponents } from "@api/Components";
-// import { getProcesses } from "../../../api/Management/test;
 
 export default function Warehouse() {
 
@@ -43,7 +42,6 @@ export default function Warehouse() {
     }, [])
 
     const handleAddShipmentSubmit = useCallback((shipment: WarehouseShipment) => {
-        console.log('handleAddShipmentSubmit', shipment);
         addWarehouseShipment(shipment)
             .then(() => {
                 warehouseShipmentsRequest();
@@ -68,11 +66,6 @@ export default function Warehouse() {
         })
             .then(res => setComponents(res.content))
     }, [])
-
-    // const request2 = useCallback(() => {
-    //     getProcesses()
-    //         .then(res => console.log(res));
-    // }, [])
 
     useEffect(() => warehouseShipmentsRequest(), [warehouseShipmentsRequest])
     useEffect(() => warehouseStockRequest(), [warehouseStockRequest])
