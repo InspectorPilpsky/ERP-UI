@@ -70,8 +70,7 @@ export default function Components() {
             <ComponentAddDrawer
                 isVisible={addDrawerIsVisible}
                 onAdd={addNewComponent}
-                onClose={() => {console.log("onClose");
-                setAddDrawerIsVisible(false)}} 
+                onClose={() => setAddDrawerIsVisible(false)} 
                 categories={categories}
                 categoriesOpts={categoriesOpts} />
             <div className={styles.components}>

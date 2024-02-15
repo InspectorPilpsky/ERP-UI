@@ -5,6 +5,7 @@ import Categories from "./pages/Categories/Categories";
 import Components from "./pages/Components/Components";
 import TechCards from "./pages/TechCards/TechCards";
 import Warehouse from "./pages/Warehouse/Warehouse";
+import Manufactoring from "./pages/Manufactoring/Manufactoring";
 
 export function useRouter() {
     return useMemo(() => {
@@ -12,7 +13,7 @@ export function useRouter() {
             <Route element={<Layout />}>
                 <Route index element={<div>Main page</div>} />
                 <Route path="orders" element={<div>orders</div>} />
-                <Route path="manufactoring" element={<div>manufactoring</div>} />
+                <Route path="manufactoring" element={<Manufactoring />} />
                 <Route path="techcards" element={<TechCards />} />
                 <Route path="components" element={<Components />} />
                 <Route path="categories" element={<Categories />} />

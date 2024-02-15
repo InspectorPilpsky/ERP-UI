@@ -10,6 +10,7 @@ import { Component } from '@domain/Component';
 import { getComponents } from '@api/Components';
 import { saveTechCard } from '@api/TechCards/saveTechCard';
 import { deleteTechCard } from '@api/TechCards/deleteTechCard';
+import { startProcess } from '@api/Management';
 
 const DEFAULT_TECH_CARD: TechCardType = {
     "id": null,
@@ -52,25 +53,34 @@ export default function TechCards() {
 
     const handleUpdate: PaginationProps['onUpdate'] = (page: number, pageSize: number) =>
         setPageState((prevState) => ({ ...prevState, page, pageSize }));
-  
-    const handleSaveTechCard = useCallback((techCard: TechCardType) => {
-        saveTechCard(techCard)
-        .then(() => {request()});
-    }, [])
-
-    const handleDeleteTechCard = useCallback((techCard: TechCardType) => {
-        deleteTechCard(techCard.id)
-        .finally(() => {request()})
-    }, []);
-
-    const handleAddComponent = useCallback(() => {
-        setTechCards(prev => ({...prev, content: [...prev.content, DEFAULT_TECH_CARD]})) 
-    }, [])
 
     const request = useCallback(() => {
         getTechCards(pageState.page - 1, pageState.pageSize)
             .then(res => setTechCards(res));
     }, [pageState.page, pageState.pageSize])
+
+    const handleSaveTechCard = useCallback((techCard: TechCardType) => {
+        saveTechCard(techCard)
+            .then(() => { request() });
+    }, [request])
+
+    const handleDeleteTechCard = useCallback((techCard: TechCardType) => {
+        deleteTechCard(techCard.id)
+            .finally(() => { request() })
+    }, [request]);
+
+    const handleAddComponent = useCallback(() => {
+        setTechCards(prev => ({ ...prev, content: [...prev.content, DEFAULT_TECH_CARD] }))
+    }, [])
+
+    const handleSendToManufacturing = useCallback((id: TechCardType["id"], quantity: number) => {
+        startProcess(id, quantity)
+            .then(() => alert("Успех!"))
+            .catch((err: Error) => {
+                if(err.message.includes("Unexpected end of JSON input")) alert("Успех!")
+                else alert("Ошибка!")
+            })
+    }, [])
 
     useEffect(() => request(), [request])
 
@@ -124,7 +134,13 @@ export default function TechCards() {
                                     onSave={handleSaveTechCard}
                                     onDelete={handleDeleteTechCard}
                                 />
-                                <Button view="raised" size="l">Отправить в производство</Button>
+                                <Button
+                                    view="raised"
+                                    size="l"
+                                    onClick={() => handleSendToManufacturing(techCardInfo.id, 1)}
+                                >
+                                    Отправить в производство
+                                </Button>
                             </>
                         }
                     </Card>
