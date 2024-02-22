@@ -6,6 +6,7 @@ import { ManufacturingProcess } from '@domain/Management/ManufacturingProcess';
 import { Drawer, DrawerItem } from '@gravity-ui/navigation';
 import ProcessInfo from './components/ProcessInfo/ProcessInfo';
 import { Component } from '@domain/Component';
+import { checkStockForProcess } from '@api/Management/checkStockForProcess';
 
 export default function Manufactoring() {
 
@@ -30,25 +31,43 @@ export default function Manufactoring() {
         setDrawerIsVisible(true);
     }, [])
 
-    const rowActions: WithTableActionsProps<ManufacturingProcess>["getRowActions"] = useCallback(() => ([
+    const rowActions: WithTableActionsProps<ManufacturingProcess>["getRowActions"] = useCallback((item) => {
+        const actionDelete =
         {
             text: "Удалить",
-            handler: (item) => {
+            theme: "danger",
+            handler: (item: ManufacturingProcess) => {
                 deleteProcess(item.id)
                     .finally(() => request());
             }
         }
-    ]), [])
+
+        const actionCheckStock = {
+            text: "Проверить наличие",
+            handler: (item: ManufacturingProcess) => {
+                checkStockForProcess(item)
+                    .catch(() => {
+                        alert("Успешно!");
+                    })
+                    .finally(() => request());
+            }
+        }
+
+        const actions = [];
+
+        if (item.stepName === "Проверить наличие составляющих на складе") {
+            actions.push(actionCheckStock);
+        }
+        actions.push(actionDelete);
+
+        return (actions);
+
+    }, [request])
 
     useEffect(() => request(), [request])
 
     return (
         <div className={styles.pageWrapper}>
-            <div className={styles.header}>
-                <div className={styles.headerTitle}>
-                    Производство
-                </div>
-            </div>
             <Drawer
                 className={styles.drawer}
                 onVeilClick={() => setDrawerIsVisible(false)}
@@ -61,6 +80,11 @@ export default function Manufactoring() {
                     content={<ProcessInfo components={processInfo} />}
                 />
             </Drawer>
+            <div className={styles.header}>
+                <div className={styles.headerTitle}>
+                    Производство
+                </div>
+            </div>
             <Card view="raised" className={styles.pageContent}>
                 <ProcessesTable
                     className={styles.table}
