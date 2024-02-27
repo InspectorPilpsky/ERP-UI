@@ -1,18 +1,25 @@
-import { Card, Table, WithTableActionsProps, withTableActions } from '@gravity-ui/uikit'
+import { Button, Card, Modal, Table, TextInput, WithTableActionsProps, withTableActions } from '@gravity-ui/uikit'
 import styles from './styles.module.css'
 import { useCallback, useEffect, useState } from 'react';
-import { deleteProcess, getProcessInfo, getProcesses } from '@api/Management';
+import { checkStockForProcess, deleteProcess, getProcessInfo, getProcesses, registerIncomeForProcess } from '@api/Management';
 import { ManufacturingProcess } from '@domain/Management/ManufacturingProcess';
 import { Drawer, DrawerItem } from '@gravity-ui/navigation';
 import ProcessInfo from './components/ProcessInfo/ProcessInfo';
 import { Component } from '@domain/Component';
-import { checkStockForProcess } from '@api/Management/checkStockForProcess';
+
+type ProductIncome = {
+    id: ManufacturingProcess["id"];
+    stock: number;
+}
 
 export default function Manufactoring() {
 
     const [processes, setProcesses] = useState<ManufacturingProcess[]>([]);
     const [processInfo, setProcessInfo] = useState<Component[]>([])
     const [drawerIsVisible, setDrawerIsVisible] = useState(false);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [productIncome, setProductIncome] = useState<ProductIncome | undefined>();
+    const [uploadingIncome, setUploadingIncome] = useState(false);
 
     const ProcessesTable = withTableActions<ManufacturingProcess>(Table);
 
@@ -30,6 +37,37 @@ export default function Manufactoring() {
         processInfoRequest(item.id);
         setDrawerIsVisible(true);
     }, [])
+
+    const handleShowCloseModal = useCallback((show: boolean, id?: ManufacturingProcess["id"]) => {
+        if (show && id) {
+            setModalIsOpen(true);
+            setProductIncome({ id, stock: 0 });
+        }
+        else {
+            setModalIsOpen(false);
+            setProductIncome(undefined);
+        }
+
+    }, [])
+
+    const handleRegisterIncome = useCallback(() => {
+        if (productIncome) {
+            const { id, stock } = productIncome;
+            console.log('productIncome', productIncome);
+            setUploadingIncome(true);
+            registerIncomeForProcess(id, stock)
+                .catch((err) => {
+                    if (err.message.includes("Unexpected end of JSON input")) {
+                        alert("Успех!")
+                        handleShowCloseModal(false);
+                    }
+                    else alert("Ошибка!")
+                })
+                .finally(() => setUploadingIncome(false));
+        }
+
+
+    }, [handleShowCloseModal, productIncome])
 
     const rowActions: WithTableActionsProps<ManufacturingProcess>["getRowActions"] = useCallback((item) => {
         const actionDelete =
@@ -53,21 +91,53 @@ export default function Manufactoring() {
             }
         }
 
+
+        const registerIncomeStock = {
+            text: "Зарегистрировать продукцию",
+            handler: (item: ManufacturingProcess) => {
+                handleShowCloseModal(true, item.id);
+            }
+        }
+
         const actions = [];
 
         if (item.stepName === "Проверить наличие составляющих на складе") {
             actions.push(actionCheckStock);
         }
+
+        if (item.stepName === "Сформировать задачу на производство" || item.stepName === "Учесть готовую продукцию на складе") {
+            actions.push(registerIncomeStock)
+        }
+
         actions.push(actionDelete);
 
         return (actions);
 
-    }, [request])
+    }, [handleShowCloseModal, request])
 
     useEffect(() => request(), [request])
 
     return (
         <div className={styles.pageWrapper}>
+            <Modal open={modalIsOpen && productIncome?.id !== undefined}
+                onClose={() => handleShowCloseModal(false)}>
+                <div className={styles.modal}>
+                    <h3>Зарегистрировать входящую продукцию</h3>
+                    <TextInput
+                        label='Количество'
+                        size='xl'
+                        placeholder='Введите количество продукции'
+                        value={productIncome?.stock.toString()}
+                        onChange={(e) => {
+                            const stock = Number(e.target.value.replace(/\D/g, ''));
+                            if (productIncome?.id) setProductIncome({ ...productIncome, stock })
+                        }} />
+                    <div className={styles.modalActions}>
+                        <Button view="action" loading={uploadingIncome} onClick={handleRegisterIncome}>Зарегистрировать</Button>
+                        <Button onClick={() => handleShowCloseModal(false)}>Отмена</Button>
+                    </div>
+                </div>
+            </Modal>
             <Drawer
                 className={styles.drawer}
                 onVeilClick={() => setDrawerIsVisible(false)}
