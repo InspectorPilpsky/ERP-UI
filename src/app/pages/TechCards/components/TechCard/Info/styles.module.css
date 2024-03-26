@@ -1,5 +1,6 @@
 .techCardComponents {
     width: 100%;
+    min-width: 600px;
 }
 
 .techCardComponents table {
