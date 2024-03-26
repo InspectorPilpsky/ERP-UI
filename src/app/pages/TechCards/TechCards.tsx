@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import styles from './styles.module.css'
 import { Button, Card, Icon, Pagination, PaginationProps, Table, TextInput } from '@gravity-ui/uikit';
 import { Magnifier, Plus } from '@gravity-ui/icons';
 import { PAGEABLE_DEFAULT, PageableWrapper } from '@api/pageable';
 import { TechCard as TechCardType } from '@domain/TechCard';
 import { getTechCards } from '@api/TechCards';
-import TechCard from './components/TechCard/TechCard';
+import TechCardView from './components/TechCard/TechCardView';
 import { Component } from '@domain/Component';
 import { getComponents } from '@api/Components';
 import { saveTechCard } from '@api/TechCards/saveTechCard';
@@ -17,24 +17,7 @@ const DEFAULT_TECH_CARD: TechCardType = {
     "name": "Наименование",
     "code": "Код",
     "stock": 1,
-    "components": [
-        {
-            "id": 1,
-            "component": {
-                "id": 1,
-                "name": "white textile",
-                "unit": "metr",
-                "category": {
-                    "id": 1,
-                    "name": "textile",
-                    "quantity": 2
-                },
-                "code": "tk01",
-                "stock": 1
-            },
-            "quantity": 5.0
-        }
-    ]
+    "components": []
 }
 
 export default function TechCards() {
@@ -46,6 +29,8 @@ export default function TechCards() {
     const [techCardInfo, setTechCardInfo] = useState<TechCardType | null>(null);
 
     const [pageState, setPageState] = useState({ page: 1, pageSize: 10 });
+
+    const [mode, setMode] = useState<"INFO" | "EDIT">("INFO");
 
     const handleTechCardClick = useCallback((techCard: TechCardType) => {
         setTechCardInfo(techCard);
@@ -61,26 +46,44 @@ export default function TechCards() {
 
     const handleSaveTechCard = useCallback((techCard: TechCardType) => {
         saveTechCard(techCard)
-            .then(() => { request() });
+            .then(() => { request(); setMode("INFO") });
     }, [request])
 
     const handleDeleteTechCard = useCallback((techCard: TechCardType) => {
         deleteTechCard(techCard.id)
-            .finally(() => { request() })
-    }, [request]);
+            .finally(() => { 
+                request();
+                setMode("INFO");
+                if(techCards.content[0] !== undefined) {
+                    handleTechCardClick(techCards.content[0]);
+                }
+            })
+    }, [handleTechCardClick, request, techCards.content]);
 
-    const handleAddComponent = useCallback(() => {
+    const handleAddTechCard = useCallback(() => {
         setTechCards(prev => ({ ...prev, content: [...prev.content, DEFAULT_TECH_CARD] }))
-    }, [])
+        handleTechCardClick(DEFAULT_TECH_CARD);
+        setMode("EDIT");
+    }, [handleTechCardClick])
 
     const handleSendToManufacturing = useCallback((id: TechCardType["id"], quantity: number) => {
         startProcess(id, quantity)
             .then(() => alert("Успех!"))
             .catch((err: Error) => {
-                if(err.message.includes("Unexpected end of JSON input")) alert("Успех!")
+                if (err.message.includes("Unexpected end of JSON input")) alert("Успех!")
                 else alert("Ошибка!")
             })
     }, [])
+
+    const disableSendToManufacturing = useMemo(() => {
+        
+        if (!techCardInfo) return false;
+
+        const { components } = techCardInfo;
+
+        return components.some(c => c.id === null)
+
+    }, [techCardInfo])
 
     useEffect(() => request(), [request])
 
@@ -102,13 +105,12 @@ export default function TechCards() {
                         />
                         <Button
                             size="xl"
-                            onClick={() => console.log("test")}>
+                            onClick={() => console.log("Поиск в разработке")}>
                             Поиск
                         </Button>
                     </div>
                 </div>
                 <div className={styles.techCardBoard}>
-                    {/* <pre>{JSON.stringify(techCards, null, 2)}</pre> */}
                     <div className={styles.table}>
                         <Table
                             data={techCards.content}
@@ -119,7 +121,7 @@ export default function TechCards() {
                             ]}
                             onRowClick={handleTechCardClick}
                         />
-                        <Button view="raised" size="xl" onClick={handleAddComponent}>
+                        <Button view="raised" size="xl" onClick={handleAddTechCard}>
                             <Icon data={Plus} />
                             Добавить
                         </Button>
@@ -128,15 +130,22 @@ export default function TechCards() {
                         {!techCardInfo && "Ничего не выбрано"}
                         {techCardInfo &&
                             <>
-                                <TechCard
+
+                                <div className={styles.techCardViewActions}>
+                                    {mode === "INFO" ?
+                                        <Button onClick={() => setMode("EDIT")}>Редактировать</Button> :
+                                        <Button onClick={() => setMode("INFO")}>Отмена</Button>}
+                                    <Button onClick={() => handleDeleteTechCard(techCardInfo)}>Удалить</Button>
+                                </div>
+                                <TechCardView
                                     techCard={techCardInfo}
                                     componentsList={components.content}
-                                    onSave={handleSaveTechCard}
-                                    onDelete={handleDeleteTechCard}
-                                />
+                                    onSave={handleSaveTechCard} 
+                                    mode={mode} />
                                 <Button
                                     view="raised"
                                     size="l"
+                                    disabled={disableSendToManufacturing}
                                     onClick={() => handleSendToManufacturing(techCardInfo.id, 1)}
                                 >
                                     Отправить в производство

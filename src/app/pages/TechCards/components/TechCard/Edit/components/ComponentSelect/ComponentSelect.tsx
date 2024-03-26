@@ -7,7 +7,7 @@ import styles from './styles.module.css'
 interface Props {
     componentList: Component[];
     selectedComponent?: TechCard["components"][0];
-    onChange?: (prevComponentId: Component["id"], changedComponent: TechCard["components"][0]) => void;
+    onChange?: (changedComponent: TechCard["components"][0]) => void;
 }
 
 export default function ComponentSelect({ componentList, selectedComponent, onChange }: Props) {
@@ -36,7 +36,7 @@ export default function ComponentSelect({ componentList, selectedComponent, onCh
                             const newComp = { ...prev, component: compFromList };
                             // eslint-disable-next-line
                             // @ts-ignore
-                            if (onChange) onChange(prev?.id, newComp);
+                            if (onChange) onChange(newComp);
                             return (newComp)
                         })
                     }
@@ -56,7 +56,7 @@ export default function ComponentSelect({ componentList, selectedComponent, onCh
                         const newComp = { ...prev, quantity: Number(e.target.value.replace(/\D/g, '')) };
                         // eslint-disable-next-line
                         // @ts-ignore
-                        if (onChange) onChange(prev?.id, newComp);
+                        if (onChange) onChange(newComp);
                         return (newComp);
                     })
                 } />

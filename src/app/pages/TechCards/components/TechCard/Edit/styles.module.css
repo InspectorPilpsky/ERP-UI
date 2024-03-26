@@ -5,3 +5,27 @@
 .techCardComponents table {
     width: 100%;
 }
+
+.editor {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    min-width: 600px;
+}
+
+.editorForm {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.editorComponents {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.editorActions {
+    display: flex;
+    gap: 12px;
+}

@@ -102,7 +102,7 @@ export default function Components() {
                         />
                         <Button
                             size="xl"
-                            onClick={() => console.log("test")}>
+                            onClick={() => console.log("Поиск в разработке")}>
                             Поиск
                         </Button>
                     </div>
