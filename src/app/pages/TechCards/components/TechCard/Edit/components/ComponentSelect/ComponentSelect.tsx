@@ -48,12 +48,13 @@ export default function ComponentSelect({ componentList, selectedComponent, onCh
                 size='xl'
                 placeholder='Количество'
                 pin="brick-round"
+                type="number"
                 value={component ? component.quantity.toString() : undefined}
                 onChange={(e) =>
                     // eslint-disable-next-line
                     // @ts-ignore
                     setComponent((prev) => {
-                        const newComp = { ...prev, quantity: Number(e.target.value.replace(/\D/g, '')) };
+                        const newComp = { ...prev, quantity: e.target.value };
                         // eslint-disable-next-line
                         // @ts-ignore
                         if (onChange) onChange(newComp);
