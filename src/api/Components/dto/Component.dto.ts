@@ -6,5 +6,5 @@ export type ComponentDTO = {
     unit: string,
     code: string,
     stock: number,
-    category: CategoryDTO
+    category: CategoryDTO | null
 }

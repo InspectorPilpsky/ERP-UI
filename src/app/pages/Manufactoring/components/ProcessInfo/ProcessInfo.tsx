@@ -15,7 +15,7 @@ export default function ProcessInfo({ components }: Props) {
                 columns={[
                     { id: "name", name: "Наименование" },
                     { id: "code", name: "Код" },
-                    { id: "category", name: "Категория", template: (data) => data.category.name },
+                    { id: "category", name: "Категория", template: (data) => data.category?.name },
                     { id: "stock", name: "Не хватает", template: (data) => `${data.stock} ${data.unit}` },
                 ]}
             />
