@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import styles from './styles.module.css'
-import { Button, Card, Icon, Tabs } from "@gravity-ui/uikit";
+import { Button, Card, Icon, Pagination, PaginationProps, Tabs } from "@gravity-ui/uikit";
 import { PAGEABLE_DEFAULT, PageableWrapper } from "@api/pageable";
 import { WarehouseShipment } from "@domain/Warehouse/WarehouseShipment";
 import { addWarehouseShipment, getWarehouseShipments, getWarehouseStock } from "@api/Warehouse";
@@ -15,10 +15,10 @@ import { getComponents } from "@api/Components";
 export default function Warehouse() {
 
     const [tab, setTab] = useState("stock");
+    const [pageState, setPageState] = useState({ page: 1, pageSize: 10, total: 1 });
     const [warehouseShipments, setWarehouseShipments] = useState<PageableWrapper<WarehouseShipment[]>>(PAGEABLE_DEFAULT);
     const [warehouseStock, setWarehouseStock] = useState<WarehouseStock[]>([DEFAULT_WAREHOUSE_STOCK]);
     const [shipmentAdderIsVisible, setShipmentAdderIsVisible] = useState(false);
-
     const [components, setComponents] = useState<Component[]>([DEFAULT_COMPONENT]);
 
     const componentsOpts: Array<{ value: string, content: string }> = useMemo(() =>
@@ -26,11 +26,13 @@ export default function Warehouse() {
             (c) => ({ value: c.id?.toString() || "-1", content: `${c.name} (${c.code}) [${c.category?.name}]` }))
         , [components])
 
+    const handleUpdate: PaginationProps['onUpdate'] = (page, pageSize) =>
+        setPageState((prevState) => ({ ...prevState, page, pageSize }));
 
     const warehouseShipmentsRequest = useCallback(() => {
-        getWarehouseShipments(0, 10)
+        getWarehouseShipments(pageState.page - 1, pageState.pageSize)
             .then(setWarehouseShipments);
-    }, [])
+    }, [pageState]);
 
     const warehouseStockRequest = useCallback(() => {
         getWarehouseStock()
@@ -85,7 +87,7 @@ export default function Warehouse() {
                 {
                     tab === "shipments" ?
                         <>
-                            <Button view="raised" size="xl" onClick={handleAddShipment} style={{width: "fit-content"}}>
+                            <Button view="raised" size="xl" onClick={handleAddShipment} style={{ width: "fit-content" }}>
                                 <Icon data={Plus} />
                                 Добавить
                             </Button>
@@ -104,6 +106,18 @@ export default function Warehouse() {
                         <WarehouseStockView stockData={warehouseStock} />
                 }
             </Card>
+            {
+                tab === "shipments" &&
+                <div className={styles.pagination}>
+                    <Pagination
+                        compact={false}
+                        page={pageState.page}
+                        pageSize={pageState.pageSize}
+                        pageSizeOptions={[10, 50, 100]}
+                        total={warehouseShipments.totalElements}
+                        onUpdate={handleUpdate} />
+                </div>
+            }
         </div>
     )
 }

@@ -29,7 +29,7 @@ export default function Components() {
 
     const [categories, setCategories] = useState<Category[]>([DEFAULT_CATEGORY])
     
-    const [pageState, setPageState] = useState({ page: 1, pageSize: 10, total: 1 });
+    const [pageState, setPageState] = useState({ page: 1, pageSize: 10});
     
     const categoryId = useMemo(() => filters.categoryId?.toString() || "-1", [filters.categoryId])
     
