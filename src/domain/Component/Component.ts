@@ -6,7 +6,7 @@ export interface Component {
     unit: string,
     code: string,
     stock: number,
-    category: Category
+    category: Category | null
 }
 
 export const DEFAULT_COMPONENT: Component = {
