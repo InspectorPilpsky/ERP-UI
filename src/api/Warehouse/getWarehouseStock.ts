@@ -23,7 +23,6 @@ export async function getWarehouseStock(): Promise<WarehouseStock[]> {
     const res = await warehouseApi.get<WarehouseStockDTO[]>("api/v1/warehouse/stock");
     
     const content = res.map(warehouseStockDto => fromWarehouseStockDTOToWarehouseStock(warehouseStockDto))
-    .filter(stock => stock.type !== "CARD")
     
     return(content);
 

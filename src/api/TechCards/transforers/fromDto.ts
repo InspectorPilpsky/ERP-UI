@@ -9,13 +9,13 @@ export function techCardDTOToTechCard(techCardDto: TechCardDTO): TechCard {
     name,
     code,
     stock,
-    components: components.map( c => {
+    components: components ? components.map( c => {
         const {id, qty, component} = c;
         return {
             id,
             quantity: qty,
             component: componentDTOToComponent(component)
         }
-    })
+    }) : []
   };
 }
