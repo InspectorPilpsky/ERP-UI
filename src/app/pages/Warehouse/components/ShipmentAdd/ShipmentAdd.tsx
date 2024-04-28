@@ -80,12 +80,13 @@ export default function ShipmentAdd({ isVisible, components, componentsOpts, onC
                                 const comp = components.find(c => c.id?.toString() === component);
 
                                 if (comp) {
-                                    setNewShipment(prev => {
-                                        const cat = { ...comp.category }
+                                    setNewShipment((prev) => {
+                                        const { category } = comp;
+                                        const cat = category ? {...category} : null;
                                         return ({
                                             ...prev,
                                             childId: Number(comp.id),
-                                            component: { ...comp, category: { ...cat } }
+                                            component: { ...comp, category: cat }
                                         })
                                     })
                                 }

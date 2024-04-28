@@ -23,7 +23,7 @@ export default function Warehouse() {
 
     const componentsOpts: Array<{ value: string, content: string }> = useMemo(() =>
         components.map(
-            (c) => ({ value: c.id?.toString() || "-1", content: `${c.name} (${c.code}) [${c.category.name}]` }))
+            (c) => ({ value: c.id?.toString() || "-1", content: `${c.name} (${c.code}) [${c.category?.name}]` }))
         , [components])
 
 

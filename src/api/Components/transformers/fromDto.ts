@@ -10,6 +10,6 @@ export function componentDTOToComponent(componentDto: ComponentDTO): Component {
     unit,
     code,
     stock,
-    category: categoryDTOToCategory(category)
+    category: category ? categoryDTOToCategory(category) : null
   };
 }
