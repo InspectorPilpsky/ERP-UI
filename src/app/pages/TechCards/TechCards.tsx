@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import styles from './styles.module.css'
-import { Button, Card, Icon, Pagination, PaginationProps, Table, TextInput } from '@gravity-ui/uikit';
+import { Button, Card, Icon, Modal, Pagination, PaginationProps, Table, TextInput } from '@gravity-ui/uikit';
 import { Magnifier, Plus } from '@gravity-ui/icons';
 import { PAGEABLE_DEFAULT, PageableWrapper } from '@api/pageable';
 import { TechCard as TechCardType } from '@domain/TechCard';
@@ -32,6 +32,9 @@ export default function TechCards() {
 
     const [mode, setMode] = useState<"INFO" | "EDIT">("INFO");
 
+    const [quantityModalIsOpen, setQuantityModalIsOpen] = useState(false);
+    const [quantityToManufacture, setQuantityToManufacture] = useState("0");
+
     const handleTechCardClick = useCallback((techCard: TechCardType) => {
         setTechCardInfo(techCard);
     }, [])
@@ -51,10 +54,10 @@ export default function TechCards() {
 
     const handleDeleteTechCard = useCallback((techCard: TechCardType) => {
         deleteTechCard(techCard.id)
-            .finally(() => { 
+            .finally(() => {
                 request();
                 setMode("INFO");
-                if(techCards.content[0] !== undefined) {
+                if (techCards.content[0] !== undefined) {
                     handleTechCardClick(techCards.content[0]);
                 }
             })
@@ -76,7 +79,7 @@ export default function TechCards() {
     }, [])
 
     const disableSendToManufacturing = useMemo(() => {
-        
+
         if (!techCardInfo) return false;
 
         const { components } = techCardInfo;
@@ -94,6 +97,29 @@ export default function TechCards() {
 
     return (
         <div className={styles.pageWrapper}>
+            <Modal
+                autoFocus
+                open={quantityModalIsOpen}
+                onClose={() => setQuantityModalIsOpen(false)}>
+                <div className={styles.modal}>
+                    Какое количество Вы хотите отправить в производство?
+                    <TextInput
+                        size='xl'
+                        placeholder='Количество'
+                        pin="brick-round"
+                        type="number"
+                        value={quantityToManufacture}
+                        onChange={(e) =>
+                            setQuantityToManufacture(e.target.value)
+                        } />
+                    <Button size="l"
+                        onClick={() =>
+                            techCardInfo &&
+                                handleSendToManufacturing(techCardInfo.id, Number(quantityToManufacture))}>
+                        Отправить
+                    </Button>
+                </div>
+            </Modal>
             <div className={styles.techCards}>
                 <div className={styles.header}>
                     <div className={styles.headerTitle}>Технологические карты</div>
@@ -140,13 +166,13 @@ export default function TechCards() {
                                 <TechCardView
                                     techCard={techCardInfo}
                                     componentsList={components.content}
-                                    onSave={handleSaveTechCard} 
+                                    onSave={handleSaveTechCard}
                                     mode={mode} />
                                 <Button
                                     view="raised"
                                     size="l"
                                     disabled={disableSendToManufacturing}
-                                    onClick={() => handleSendToManufacturing(techCardInfo.id, 1)}
+                                    onClick={() => setQuantityModalIsOpen(true)}
                                 >
                                     Отправить в производство
                                 </Button>

@@ -13,7 +13,7 @@ export default function TechCardInfo({components}: Props) {
                 data={components}
                 columns={[
                     { id: "name", name: "Наименование", template: (component) => component.component.name },
-                    { id: "category", name: "Категория", template: (component) => component.component.category.name },
+                    { id: "category", name: "Категория", template: (component) => component.component.category?.name },
                     { id: "quantity", name: "Количество", template: (component) => component.quantity }
                 ]}
             />

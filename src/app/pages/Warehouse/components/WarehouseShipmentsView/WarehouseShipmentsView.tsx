@@ -20,7 +20,7 @@ export default function WarehouseShipmentsView({ shipmentsData }: Props) {
                     { id: "name", name: "Наименование", template: (data) => data.component.name },
                     { id: "code", name: "Код", template: (data) => data.component.code },
                     { id: "type", name: "Вид" },
-                    { id: "category", name: "Категория", template: (data) => data.component.category.name },
+                    { id: "category", name: "Категория", template: (data) => data.component.category?.name },
                     { id: "amount", name: "Кол- во" },
                     { id: "cost", name: "Цена" },
                     { id: "inDateTime", name: "Дата операции" },

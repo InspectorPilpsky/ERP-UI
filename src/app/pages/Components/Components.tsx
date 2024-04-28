@@ -113,7 +113,7 @@ export default function Components() {
                     columns={[
                         { id: "name", name: "Наименование" },
                         { id: "unit", name: "Единицы измерения" },
-                        { id: "category", name: "Категория", template: (data) => data.category.name },
+                        { id: "category", name: "Категория", template: (data) => data.category?.name },
                         { id: "code", name: "Код" },
                         { id: "stock", name: "Наличие" },
                     ]}

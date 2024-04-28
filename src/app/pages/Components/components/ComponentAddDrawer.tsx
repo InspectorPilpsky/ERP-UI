@@ -49,7 +49,7 @@ export default function ComponentAddDrawer({ isVisible, categories, categoriesOp
                             size='xl'
                             label='Категория'
                             placeholder="Категория"
-                            value={[newComponent.category.name]}
+                            value={[newComponent.category ? newComponent.category.name : ""]}
                             options={categoriesOpts.filter(c => c.content !== "Все")}
                             onUpdate={([category]) => {
                                 const cat = categories.find(c => c.id?.toString() === category);
