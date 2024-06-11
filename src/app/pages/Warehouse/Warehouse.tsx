@@ -13,16 +13,16 @@ import { Component, DEFAULT_COMPONENT } from "@domain/Component";
 import { getComponents } from "@api/Components";
 import { warehouseStockTypeMap } from "./constants";
 
-const filterOptions: Array<{ value: string | null, content: string }> =
+const filterOptions: Array<{ value: string, content: string }> =
     [...Object.keys(WarehouseStockType)
         .map((t) => ({ value: t, content: warehouseStockTypeMap[t as WarehouseStockType] })),
-        { value: null, content: "Все" }
+        { value: "ALL", content: "Все" }
     ]
 
 export default function Warehouse() {
 
     const [tab, setTab] = useState("stock");
-    const [filter, setFilter] = useState<WarehouseStockType | null>(null);
+    const [filter, setFilter] = useState<WarehouseStockType | "ALL">("ALL");
     const [pageState, setPageState] = useState({ page: 1, pageSize: 10, total: 1 });
     const [warehouseShipments, setWarehouseShipments] = useState<PageableWrapper<WarehouseShipment[]>>(PAGEABLE_DEFAULT);
     const [warehouseStock, setWarehouseStock] = useState<WarehouseStock[]>([DEFAULT_WAREHOUSE_STOCK]);
@@ -35,7 +35,7 @@ export default function Warehouse() {
         , [components])
 
     const handleFilterChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.value === "") setFilter(null);
+        if (e.target.value === "ALL") setFilter("ALL");
         else {
             const v = WarehouseStockType[e.target.value as WarehouseStockType];
             setFilter(v)
@@ -102,7 +102,7 @@ export default function Warehouse() {
                         { id: 'shipments', title: 'Поставки/отгрузки' },
                     ]}
                 />
-                <RadioButton name="typeFilter" defaultValue={null} options={filterOptions} onChange={handleFilterChange} />
+                <RadioButton name="typeFilter" defaultValue={"ALL"} options={filterOptions} onChange={handleFilterChange} />
                 {
                     tab === "shipments" ?
                         <>
