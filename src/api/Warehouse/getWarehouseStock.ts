@@ -1,5 +1,5 @@
 import { warehouseApi } from "@api/api";
-import { WarehouseStock } from "@domain/Warehouse/WarehouseStock";
+import { WarehouseStock, WarehouseStockType } from "@domain/Warehouse/WarehouseStock";
 import { WarehouseStockDTO } from "./dto/WarehouseStock.dto";
 import { fromWarehouseStockDTOToWarehouseStock } from "./transformers/fromDto";
 
@@ -18,9 +18,9 @@ export async function getWarehouseStock(): Promise<PageableWrapper<WarehouseStoc
 }
 */
 
-export async function getWarehouseStock(): Promise<WarehouseStock[]> {
+export async function getWarehouseStock(type: WarehouseStockType | null): Promise<WarehouseStock[]> {
 
-    const res = await warehouseApi.get<WarehouseStockDTO[]>("api/v1/warehouse/stock");
+    const res = await warehouseApi.get<WarehouseStockDTO[]>("api/v1/warehouse/stock", {query: {unitType: type}});
     
     const content = res.map(warehouseStockDto => fromWarehouseStockDTOToWarehouseStock(warehouseStockDto))
     

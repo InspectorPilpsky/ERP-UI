@@ -93,6 +93,13 @@ export default function Manufactoring() {
 
 
         const registerIncomeStock = {
+            text: "Зарегистрировать изделия",
+            handler: (item: ManufacturingProcess) => {
+                handleShowCloseModal(true, item.id);
+            }
+        }
+
+        const registerIncomeProduct = {
             text: "Зарегистрировать продукцию",
             handler: (item: ManufacturingProcess) => {
                 handleShowCloseModal(true, item.id);
@@ -107,6 +114,10 @@ export default function Manufactoring() {
 
         if (item.stepName === "Сформировать задачу на производство" || item.stepName === "Учесть готовую продукцию на складе") {
             actions.push(registerIncomeStock)
+        }
+
+        if (item.stepName === "Сформировать задачу на предпродажную упаковку") {
+            actions.push(registerIncomeProduct)
         }
 
         actions.push(actionDelete);

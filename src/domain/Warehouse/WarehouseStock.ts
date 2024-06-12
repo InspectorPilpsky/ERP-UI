@@ -1,9 +1,11 @@
 import { Component, DEFAULT_COMPONENT } from "@domain/Component"
 import { TechCard } from ".."
+import { Product } from "@domain/Product"
 
 export enum WarehouseStockType {
     COMPONENT = "COMPONENT",
-    CARD = "CARD"
+    CARD = "CARD",
+    PRODUCT = "PRODUCT"
 }
 
 interface AbstractWarehouseStock {
@@ -22,7 +24,12 @@ export interface WarehouseComponentStock extends AbstractWarehouseStock {
     component: Component
 }
 
-export type WarehouseStock = WarehouseCardStock | WarehouseComponentStock;
+export interface WarehouseProductStock extends AbstractWarehouseStock {
+    type: WarehouseStockType.PRODUCT,
+    product: Product
+}
+
+export type WarehouseStock = WarehouseCardStock | WarehouseComponentStock | WarehouseProductStock;
 
 export const DEFAULT_WAREHOUSE_STOCK: WarehouseStock = {
     amount: 0,

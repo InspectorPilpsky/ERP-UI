@@ -2,7 +2,8 @@ import { Component, DEFAULT_COMPONENT } from "@domain/Component"
 
 export enum WarehouseShipmentType {
     CARD = "CARD",
-    COMPONENT = "COMPONENT"
+    COMPONENT = "COMPONENT",
+    PRODUCT = "PRODUCT"
 }
 
 export enum WarehouseShipmentAction {

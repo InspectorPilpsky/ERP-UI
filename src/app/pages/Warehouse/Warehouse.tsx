@@ -1,20 +1,28 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import styles from './styles.module.css'
-import { Button, Card, Icon, Pagination, PaginationProps, Tabs } from "@gravity-ui/uikit";
+import { Button, Card, Icon, Pagination, PaginationProps, RadioButton, Tabs } from "@gravity-ui/uikit";
 import { PAGEABLE_DEFAULT, PageableWrapper } from "@api/pageable";
 import { WarehouseShipment } from "@domain/Warehouse/WarehouseShipment";
 import { addWarehouseShipment, getWarehouseShipments, getWarehouseStock } from "@api/Warehouse";
-import { DEFAULT_WAREHOUSE_STOCK, WarehouseStock } from "@domain/Warehouse/WarehouseStock";
+import { DEFAULT_WAREHOUSE_STOCK, WarehouseStock, WarehouseStockType } from "@domain/Warehouse/WarehouseStock";
 import WarehouseStockView from "./components/WarehouseStockView/WarehouseStockView";
 import WarehouseShipmentsView from "./components/WarehouseShipmentsView/WarehouseShipmentsView";
 import { Plus } from "@gravity-ui/icons";
 import ShipmentAdd from "./components/ShipmentAdd/ShipmentAdd";
 import { Component, DEFAULT_COMPONENT } from "@domain/Component";
 import { getComponents } from "@api/Components";
+import { warehouseStockTypeMap } from "./constants";
+
+const filterOptions: Array<{ value: string | null, content: string }> =
+    [...Object.keys(WarehouseStockType)
+        .map((t) => ({ value: t, content: warehouseStockTypeMap[t as WarehouseStockType] })),
+        { value: null, content: "Все" }
+    ]
 
 export default function Warehouse() {
 
     const [tab, setTab] = useState("stock");
+    const [filter, setFilter] = useState<WarehouseStockType | null>(null);
     const [pageState, setPageState] = useState({ page: 1, pageSize: 10, total: 1 });
     const [warehouseShipments, setWarehouseShipments] = useState<PageableWrapper<WarehouseShipment[]>>(PAGEABLE_DEFAULT);
     const [warehouseStock, setWarehouseStock] = useState<WarehouseStock[]>([DEFAULT_WAREHOUSE_STOCK]);
@@ -26,6 +34,16 @@ export default function Warehouse() {
             (c) => ({ value: c.id?.toString() || "-1", content: `${c.name} (${c.code}) [${c.category?.name}]` }))
         , [components])
 
+    const handleFilterChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.value === "") setFilter(null);
+        else {
+            const v = WarehouseStockType[e.target.value as WarehouseStockType];
+            setFilter(v)
+        }
+
+
+    }, []);
+
     const handleUpdate: PaginationProps['onUpdate'] = (page, pageSize) =>
         setPageState((prevState) => ({ ...prevState, page, pageSize }));
 
@@ -35,9 +53,9 @@ export default function Warehouse() {
     }, [pageState]);
 
     const warehouseStockRequest = useCallback(() => {
-        getWarehouseStock()
+        getWarehouseStock(filter)
             .then(setWarehouseStock)
-    }, [])
+    }, [filter])
 
     const handleAddShipment = useCallback(() => {
         setShipmentAdderIsVisible(true);
@@ -84,6 +102,7 @@ export default function Warehouse() {
                         { id: 'shipments', title: 'Поставки/отгрузки' },
                     ]}
                 />
+                <RadioButton name="typeFilter" defaultValue={null} options={filterOptions} onChange={handleFilterChange} />
                 {
                     tab === "shipments" ?
                         <>
