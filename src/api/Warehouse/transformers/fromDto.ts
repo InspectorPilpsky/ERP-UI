@@ -57,7 +57,7 @@ export function fromWarehouseShipmentDTOToWarehouseShipment(warehouseShipmentDto
         component,
         cost,
         childId,
-        type,
+        type: WarehouseShipmentType[type],
         inDateTime,
         orderNumber
     }

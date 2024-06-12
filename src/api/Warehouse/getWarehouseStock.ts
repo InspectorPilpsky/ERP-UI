@@ -18,9 +18,9 @@ export async function getWarehouseStock(): Promise<PageableWrapper<WarehouseStoc
 }
 */
 
-export async function getWarehouseStock(type: WarehouseStockType | null): Promise<WarehouseStock[]> {
+export async function getWarehouseStock(type: WarehouseStockType | "ALL"): Promise<WarehouseStock[]> {
 
-    const res = await warehouseApi.get<WarehouseStockDTO[]>("api/v1/warehouse/stock", {query: {unitType: type}});
+    const res = await warehouseApi.get<WarehouseStockDTO[]>("api/v1/warehouse/stock", {query: {unitType: type === "ALL" ? null : type}});
     
     const content = res.map(warehouseStockDto => fromWarehouseStockDTOToWarehouseStock(warehouseStockDto))
     
