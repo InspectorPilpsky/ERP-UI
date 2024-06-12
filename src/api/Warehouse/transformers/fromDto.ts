@@ -1,7 +1,7 @@
 import { componentDTOToComponent } from "@api/Components/transformers/fromDto";
 import { WarehouseStockDTO } from "../dto/WarehouseStock.dto";
 import { WarehouseStock, WarehouseStockType } from "@domain/Warehouse/WarehouseStock";
-import { WarehouseShipment, WarehouseShipmentAction } from "@domain/Warehouse/WarehouseShipment";
+import { WarehouseShipment, WarehouseShipmentAction, WarehouseShipmentType } from "@domain/Warehouse/WarehouseShipment";
 import { WarehouseShipmentDTO } from "../dto/WarehouseShipment.dto";
 import { techCardDTOToTechCard } from "@api/TechCards/transforers/fromDto";
 import { productDTOToProduct } from "@api/Product/transformers/fromDto";
