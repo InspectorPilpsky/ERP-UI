@@ -10,7 +10,6 @@ function transformResponse(res: GetWarehouseShipmentsResponse): PageableWrapper<
     return {
         ...res,
         content: res.content.map(fromWarehouseShipmentDTOToWarehouseShipment)
-        // .filter(shipment => shipment.type !== "CARD")
     }
 }
 

@@ -1,0 +1,11 @@
+.techCardFormWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+}
+
+.techCardSelectInput {
+    display: grid;
+    grid-template-columns: 1fr 90px;
+}
