@@ -1,12 +1,12 @@
 import { Component } from "@domain/Component";
-import { TechCard } from "@domain/TechCard";
+import { TechCard, TechCardWithUndefComponent } from "@domain/TechCard";
 import { Select, TextInput } from "@gravity-ui/uikit";
 import { useMemo, useState } from "react";
 import styles from './styles.module.css'
 
 interface Props {
     componentList: Component[];
-    selectedComponent?: TechCard["components"][0];
+    selectedComponent?: TechCard["components"][0] | TechCardWithUndefComponent["components"][0];
     onChange?: (changedComponent: TechCard["components"][0]) => void;
 }
 
@@ -25,7 +25,7 @@ export default function ComponentSelect({ componentList, selectedComponent, onCh
                 filterable
                 size="xl"
                 pin="round-brick"
-                value={component ? [component?.component?.name] : undefined}
+                value={component?.component ? [component?.component?.name] : undefined}
                 options={componentOptions}
                 onUpdate={([component]) => {
                     const compFromList = componentList.find(c => c.id?.toString() === component)

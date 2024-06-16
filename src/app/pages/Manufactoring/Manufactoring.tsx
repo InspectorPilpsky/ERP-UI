@@ -6,6 +6,10 @@ import { ManufacturingProcess } from '@domain/Management/ManufacturingProcess';
 import { Drawer, DrawerItem } from '@gravity-ui/navigation';
 import ProcessInfo from './components/ProcessInfo/ProcessInfo';
 import { Component } from '@domain/Component';
+import AddProcessModal from './components/AddProcessModal/AddProcessModal';
+import { TechCard } from '@domain/TechCard';
+import { Boxing } from './types';
+import { startPresaleProcess } from '@api/Management/startPresaleProcess';
 
 type ProductIncome = {
     id: ManufacturingProcess["id"];
@@ -18,6 +22,7 @@ export default function Manufactoring() {
     const [processInfo, setProcessInfo] = useState<Component[]>([])
     const [drawerIsVisible, setDrawerIsVisible] = useState(false);
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [addModalIsOpen, setAddModalIsOpen] = useState(false);
     const [productIncome, setProductIncome] = useState<ProductIncome | undefined>();
     const [uploadingIncome, setUploadingIncome] = useState(false);
 
@@ -63,11 +68,21 @@ export default function Manufactoring() {
                     }
                     else alert("Ошибка!")
                 })
-                .finally(() => setUploadingIncome(false));
+                .finally(() => {request(); setUploadingIncome(false)});
         }
 
 
-    }, [handleShowCloseModal, productIncome])
+    }, [handleShowCloseModal, productIncome, request])
+
+    const handleAddProduct = useCallback((name: string, techCard: TechCard, quantity: number, boxing: Boxing[]) => {
+        console.log("name", name, "techCard", techCard, "quantity", quantity, "boxing", boxing)
+        startPresaleProcess(name, techCard, quantity, boxing)
+        .then((res) => {
+            console.log(res);
+            request();
+        })
+        .catch((err) => console.error("Ну пиздец", err))
+    }, [request])
 
     const rowActions: WithTableActionsProps<ManufacturingProcess>["getRowActions"] = useCallback((item) => {
         const actionDelete =
@@ -130,6 +145,9 @@ export default function Manufactoring() {
 
     return (
         <div className={styles.pageWrapper}>
+            <AddProcessModal isOpen={addModalIsOpen} onClose={() => setAddModalIsOpen(false)}
+                onAddItem={(item: TechCard, quantity: number) => { console.log(item, quantity) }}
+                onAddProduct={handleAddProduct} />
             <Modal open={modalIsOpen && productIncome?.id !== undefined}
                 onClose={() => handleShowCloseModal(false)}>
                 <div className={styles.modal}>
@@ -165,6 +183,7 @@ export default function Manufactoring() {
                 <div className={styles.headerTitle}>
                     Производство
                 </div>
+                <Button size="l" view="action" onClick={() => setAddModalIsOpen(true)}>Добавить</Button>
             </div>
             <Card view="raised" className={styles.pageContent}>
                 <ProcessesTable

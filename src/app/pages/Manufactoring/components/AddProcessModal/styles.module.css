@@ -1,0 +1,13 @@
+
+.modal {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 400px;
+}
+
+.modalActions {
+    display: flex;
+    gap: 12px;
+}
