@@ -43,7 +43,7 @@ export default function CustomerInfoDrawer({
   }, [customer.id]);
 
   return isVisible ? (
-    <Drawer title={"Контрагент"} onClose={onClose}>
+    <Drawer title={"Контрагент"} onClose={onClose} width="700px">
       <div className={styles.wrapper}>
         <div>
           <table>
@@ -77,8 +77,10 @@ export default function CustomerInfoDrawer({
             columns={[
               { id: "direction", name: "Направление" },
               { id: "unitType", name: "Тип" },
+              { id: "productName", name: "Наименование" },
               { id: "qty", name: "Количество" },
               { id: "price", name: "Стоимость" },
+              { id: "deliveryTime", name: "Дата и время" },
             ]}
           />
           <br />

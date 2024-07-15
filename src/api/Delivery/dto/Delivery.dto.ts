@@ -6,6 +6,7 @@ export type DeliveryDTO = {
   id: number;
   customerId: CustomerDTO["id"];
   productId: ProductDTO["id"];
+  productName: ProductDTO["name"];
   unitType: WarehouseStockDTO["type"];
   qty: number;
   price: number;
