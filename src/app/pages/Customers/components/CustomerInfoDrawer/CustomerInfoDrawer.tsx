@@ -16,6 +16,17 @@ interface Props {
   onAdd?: (component: Customer) => void;
 }
 
+function toPreZeroed(num: number): string {
+  return num < 10 ? `0${num}` : `${num}`;
+}
+
+function dateConvert(dateTime: string): string {
+  const date = new Date(dateTime);
+  return `${toPreZeroed(date.getDate())}.${toPreZeroed(
+    date.getMonth() + 1
+  )}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+}
+
 export default function CustomerInfoDrawer({
   isVisible,
   customer,
@@ -80,7 +91,12 @@ export default function CustomerInfoDrawer({
               { id: "productName", name: "Наименование" },
               { id: "qty", name: "Количество" },
               { id: "price", name: "Стоимость" },
-              { id: "deliveryTime", name: "Дата и время" },
+              {
+                id: "deliveryTime",
+                name: "Дата и время",
+                template: ({ deliveryTime }) =>
+                  deliveryTime ? dateConvert(deliveryTime) : deliveryTime,
+              },
             ]}
           />
           <br />
@@ -89,9 +105,14 @@ export default function CustomerInfoDrawer({
             data={customerTransactions || []}
             columns={[
               { id: "direction", name: "Направление" },
-              { id: "orderNumber", name: "Тип" },
-              { id: "amount", name: "Количество" },
-              { id: "price", name: "Стоимость" },
+              { id: "orderNumber", name: "Номер проводки" },
+              { id: "amount", name: "Сумма" },
+              {
+                id: "deliveryTime",
+                name: "Дата и время",
+                template: ({ deliveryTime }) =>
+                  deliveryTime ? dateConvert(deliveryTime) : deliveryTime,
+              },
             ]}
           />
         </div>
