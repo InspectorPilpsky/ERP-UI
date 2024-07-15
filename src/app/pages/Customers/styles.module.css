@@ -1,0 +1,16 @@
+
+.customersTable {
+    width: 100%;
+}
+
+.customersTable table {
+    width: 100%;
+}
+
+.pagination {
+    display: flex;
+    padding: 24px 0px;
+    flex-direction: column;
+    align-items: center;
+    align-self: stretch;
+}
