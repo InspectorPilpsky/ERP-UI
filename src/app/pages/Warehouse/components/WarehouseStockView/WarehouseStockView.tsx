@@ -215,14 +215,14 @@ export default function WarehouseStockView({ stockData }: Props) {
         data={stockData}
         columns={[
           {
-            id: "name",
-            name: "Наименование",
-            template: (data) => stockTemplate(data, "name"),
-          },
-          {
             id: "code",
             name: "Код",
             template: (data) => stockTemplate(data, "code"),
+          },
+          {
+            id: "name",
+            name: "Наименование",
+            template: (data) => stockTemplate(data, "name"),
           },
           {
             id: "type",
